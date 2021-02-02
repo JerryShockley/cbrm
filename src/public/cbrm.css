@@ -1,0 +1,135 @@
+:root {
+  box-sizing: border-box;
+ }
+*, ::before, ::after {
+  box-sizing: inherit;
+}
+body * + * {
+  margin-top: 1.5em;
+}
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  display: block;
+  /* background-color: ebfff; */
+  font-family: Lato, helvetica, sans-serif;
+  font-size: 100%;
+  padding: 0 0;
+  margin: 0;
+  width: 96vw;
+  height: 100vh;
+  color: #333;
+  overflow: hidden;
+}
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: repeat(3, auto);
+  grid-gap: 1.5em;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+header {
+ grid-column: 1 / 3;
+ grid-row: 1 / 2;
+ text-align: center;
+}
+.main {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  min-height: 0;
+  min-width: 0;
+}
+.brands {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  font-size: 0.8em;
+}
+.brands li {
+  padding-left: 0;
+}
+.brands li + li {
+  padding: 0;
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+#buttons {
+  grid-column: 1 / 3;
+  grid-row: 3 / 4;
+}
+
+#mysvg {
+  width: auto;
+  height: 100%;
+  margin: 0;
+  background: radial-gradient(circle at 50%, #fefefe 0%, #cbeeff 100%);
+    touch-action: none;
+}
+
+
+/* @media (max-aspect-ratio: 1/1) { */
+
+/*   #mysvg { */
+/*     width: 100%; */
+/*     height: auto; */
+/*   } */
+/* } */
+
+ #buttons {
+   /* display: flex; */
+   width: 100%;
+   margin: 2em;
+ }
+ #buttons button + button {
+   margin-left: 1.5em;
+ }
+ #buttons button {
+   display: block;
+   width: 12%;
+   text-align: center;
+   text-decoration: none;
+   padding: 0.8em 1em;
+   border-radius: 0.5em;
+ }
+ button #submit {
+   background-color: green;
+   color: white;
+ }
+ #brand1 {
+   color: Red;
+ }
+ #brand2 {
+   color: DarkOrange;
+ }
+ #brand3 {
+   color: Magenta;
+ }
+ #brand4 {
+   color: BlueViolet;
+ }
+ #brand5 {
+   color: LimeGreen;
+ }
+ #brand6 {
+   color: Teal;
+ }
+ #brand7 {
+   color: Cyan;
+ }
+ #brand8 {
+   color: DodgerBlue;
+ }
+ #brand9 {
+   color: SandyBrown;
+ }
+ #brand10 {
+   color: SaddleBrown;
+ }
+ #brand11 {
+   color: Maroon;
+ }
+ #brand12 {
+   color: Navy;
+ }
