@@ -4,7 +4,14 @@ const NS = svg.getAttribute(`xmlns`)
 const points = new Map()
 const brands = new Map()
 const brandListNode = document.getElementById(`brand-list`)
+const modalDialog = document.getElementById(`brand-modal`)
+const submitButton = document.getElementById(`submit`)
+const saveButton = modalDialog.getElementsByClassName(`save`)[0]
+const brandName = document.getElementById(`brand-name`)
+const brandNotes = document.getElementById(`brand-notes`)
+const tmpKey = `partial`
 const maxPointCount = 12
+let dataPoint = {}
 let pointCount = 0
 const colors = [
   `Red`,
@@ -24,16 +31,39 @@ const colors = [
 // events
 // svg.addEventListener(`pointerdown`, getCoordinates);
 svg.addEventListener(`pointerdown`, addDataPoint)
-
+// submitButton.onclick =
+saveButton.addEventListener(`click`, saveButtonHandler)
 // Handle pointerdown event
 function addDataPoint(event) {
   if (pointCount === maxPointCount) return
-
   pointCount += 1 // must be 1st line because it changes global
-  const dataPoint = createdataPointObject(event)
-  points.set(stringifyCoordinates(dataPoint.svgX, dataPoint.svgY), dataPoint)
+  dataPoint = createdataPointObject(event)
+  // points.set(stringifyCoordinates(dataPoint.svgX, dataPoint.svgY), dataPoint)
   brands.set(dataPoint.brand, dataPoint)
   renderDataPoint(dataPoint)
+  modalDialog.style.display = `block`
+  brandName.focus()
+}
+
+function saveButtonHandler(event) {
+  if (brandName.value === undefined) return
+  input = {
+    brand: brandName.value,
+    notes: brandNotes.value || ``,
+  }
+  brandName.value = ``
+  brandNotes.value = ``
+  completePartialMapEntry(input)
+  modalDialog.style.display = `none`
+  renderBrandName(dataPoint)
+}
+
+function completePartialMapEntry(input) {
+  tmp = brands.get(tmpKey)
+  tmp.brand = input.brand
+  tmp.notes = input.notes
+  brands.delete(tmpKey) // Must do this before adding new due to size limit.
+  brands.set(tmp.brand, tmp)
 }
 
 function stringifyCoordinates(x, y) {
@@ -43,9 +73,9 @@ function stringifyCoordinates(x, y) {
 function createdataPointObject(event) {
   const input = getDataPointUserInput()
   const coordinates = transformCoordinates(event)
-  const dataPoint = {
-    brand: input.brand,
-    notes: input.notes,
+  dataPoint = {
+    brand: tmpKey,
+    notes: ``,
     screenX: coordinates.screenX,
     screenY: coordinates.screenY,
     svgX: coordinates.svgX,
@@ -59,9 +89,10 @@ function createdataPointObject(event) {
 
 // Get brand name and notes from user.
 function getDataPointUserInput() {
+  modalDialog.style.display = `block`
   return {
-    brand: `Brand ${pointCount}`,
-    notes: `This is some very cool stuff. What do you think?`,
+    brand: brandName.value,
+    notes: brandNotes.value,
   }
 }
 
@@ -82,8 +113,15 @@ function transformCoordinates(event) {
   return tCoordinates
 }
 
+function renderBrandName() {
+  const brand = document.createElement(`li`)
+  brand.setAttribute(`class`, `brand`)
+  brand.setAttribute(`id`, `brand${pointCount}`)
+  brand.textContent = dataPoint.brand
+  brandListNode.appendChild(brand)
+}
 // add a circle to the target
-function renderDataPoint(dataPoint) {
+function renderDataPoint() {
   // circle clicked?
   // if (event.target.nodeName === `circle`) return;
 
@@ -92,19 +130,14 @@ function renderDataPoint(dataPoint) {
   // svgP = svgPoint(event.target, event.clientX, event.clientY),
   // cX = Math.round(svgP.x),
   // cY = Math.round(svgP.y),
-  circle = document.createElementNS(NS, `circle`)
-  brand = document.createElement(`li`)
+  const circle = document.createElementNS(NS, `circle`)
   circle.setAttribute(`cx`, dataPoint.svgX)
   circle.setAttribute(`cy`, dataPoint.svgY)
   circle.setAttribute(`r`, 1)
   circle.setAttribute(`fill`, colors[pointCount - 1])
   circle.setAttribute(`class`, `point`)
   circle.setAttribute(`id`, `pt${pointCount}`)
-  brand.setAttribute(`class`, `brand`)
-  brand.setAttribute(`id`, `brand${pointCount}`)
-  brand.textContent = dataPoint.brand
   svg.appendChild(circle)
-  brandListNode.appendChild(brand)
 }
 
 // translate page to SVG co-ordinate
