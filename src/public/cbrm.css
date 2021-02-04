@@ -62,6 +62,7 @@ header {
 
 #mysvg {
   width: auto;
+  margin-right: 2em;
   height: 100%;
   margin: 0;
   background: radial-gradient(circle at 50%, #fefefe 0%, #cbeeff 100%);
@@ -69,13 +70,12 @@ header {
 }
 
 
-/* @media (max-aspect-ratio: 1/1) { */
-
-/*   #mysvg { */
-/*     width: 100%; */
-/*     height: auto; */
-/*   } */
-/* } */
+@media (max-aspect-ratio: 1/1) {
+  #mysvg {
+    width: 100%;
+    height: auto;
+  }
+}
 
  #buttons {
    /* display: flex; */
