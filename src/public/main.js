@@ -35,7 +35,7 @@ const brands = new Map()
 // Map key used to store a partial data value while awaiting user
 // input of the brand info from the dialog.
 const tmpKey = `partial`
-// Used once for each dataPoint the user creates.
+// Incremented by 1 each time a dataPoint is added.
 let pointCount = 0
 // Stores the maximum number of points the user is allowed to add.
 // Note this value cannot be greater than the number of elements
@@ -127,6 +127,7 @@ function renderDataPoint() {
 }
 
 // **************   Modal Dialog  ***************
+// eslint-disable-next-line no-unused-vars
 function saveButtonHandler(event) {
   if (brandName.value === undefined) return
   input = {
