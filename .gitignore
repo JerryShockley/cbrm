@@ -62,3 +62,4 @@ typings/
 
 # Apple Spotlight index file.
 **/.DS_Store
+**/.cache
