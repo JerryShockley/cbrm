@@ -7,6 +7,7 @@
 const app = require(`../app`)
 const debug = require(`debug`)(`cbrm:server`)
 const http = require(`http`)
+const { dbConn } = app.dbConn
 
 /**
  * Get port from environment and store in Express.
@@ -82,4 +83,26 @@ function onListening() {
   const addr = server.address()
   const bind = typeof addr === `string` ? `pipe ${addr}` : `port ${addr.port}`
   debug(`Listening on ${bind}`)
+  // Let PM2 know we're up and running.
+  process.send(`ready`)
 }
+
+function gracefulShutdown(signal) {
+  console.log(`Received '${signal}'...Shutting down.`)
+  server.close(() => {
+    console.log(`Server is closed.`)
+    dbConn.stop((err) => {
+      process.exit(err ? 1 : 0)
+    })
+  })
+}
+
+process.on(`SIGINT`, () => {
+  gracefulShutdown(`SIGINT`)
+})
+process.on(`SIGTERM`, () => {
+  gracefulShutdown(`SIGTERM`)
+})
+process.on(`SIGHUP`, () => {
+  gracefulShutdown(`SIGHUP`)
+})
