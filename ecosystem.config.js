@@ -7,7 +7,6 @@ module.exports = {
       watch: ".",
       watch_delay: 1000,
       ignore_watch: ["./node_modules"],
-      wait_ready: "true",
       env: {
         PORT: 3001,
         NODE_ENV: "development",
