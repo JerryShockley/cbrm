@@ -1,22 +1,25 @@
+/* eslint-disable quotes */
 module.exports = {
-  apps : [{
-    script: 'index.js',
-    watch: '.'
-  }, {
-    script: './service-worker/',
-    watch: ['./service-worker']
-  }],
-
-  deploy : {
-    production : {
-      user : 'SSH_USERNAME',
-      host : 'SSH_HOSTMACHINE',
-      ref  : 'origin/master',
-      repo : 'GIT_REPOSITORY',
-      path : 'DESTINATION_PATH',
-      'pre-deploy-local': '',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production',
-      'pre-setup': ''
-    }
-  }
-};
+  apps: [
+    {
+      name: "cbrm",
+      script: "./bin/index.js",
+      watch: ".",
+      watch_delay: 1000,
+      ignore_watch: ["./node_modules"],
+      wait_ready: "true",
+      env: {
+        PORT: 3001,
+        NODE_ENV: "development",
+      },
+      env_prod: {
+        PORT: 80,
+        NODE_ENV: "production",
+      },
+    },
+    // {
+    //   script: "./service-worker/",
+    //   watch: ["./service-worker"],
+    // },
+  ],
+}
