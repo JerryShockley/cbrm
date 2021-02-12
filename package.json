@@ -6,7 +6,12 @@
   "main": "./bin/index.js",
   "scripts": {
     "dev_start": "pm2 start ecosystem.config.js",
-    "prod_start": "pm2 start ecosystem.config.js --env prod"
+    "prod_start": "pm2 start ecosystem.config.js --env prod",
+    "stop": "pm2 stop ecosystem.config.js",
+    "restart": "pm2 restart ecosystem.config.js",
+    "restart_update": "pm2 restart ecosystem.config.js --update_env",
+    "reload": "pm2 reload ecosystem.config.js",
+    "delete": "pm2 delete ecosystem.config.js"
   },
   "repository": {
     "type": "git",
