@@ -83,15 +83,14 @@ function onListening() {
   const addr = server.address()
   const bind = typeof addr === `string` ? `pipe ${addr}` : `port ${addr.port}`
   debug(`Listening on ${bind}`)
-  // Let PM2 know we're up and running.
-  process.send(`ready`)
 }
 
-function gracefulShutdown(signal) {
+// Use gratefull shutdown with PM2, Forever, etc.
+async function gracefulShutdown(signal) {
   console.log(`Received '${signal}'...Shutting down.`)
-  server.close(() => {
+  await server.close(async () => {
     console.log(`Server is closed.`)
-    dbConn.stop((err) => {
+    await dbConn.stop((err) => {
       process.exit(err ? 1 : 0)
     })
   })
