@@ -8,11 +8,9 @@ module.exports = {
       watch_delay: 1000,
       ignore_watch: ["./node_modules"],
       env: {
-        PORT: 3001,
         NODE_ENV: "development",
       },
       env_prod: {
-        PORT: 80,
         NODE_ENV: "production",
       },
     },
