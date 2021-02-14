@@ -14,9 +14,5 @@ module.exports = {
         NODE_ENV: "production",
       },
     },
-    // {
-    //   script: "./service-worker/",
-    //   watch: ["./service-worker"],
-    // },
   ],
 }
