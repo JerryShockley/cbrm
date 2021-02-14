@@ -87,12 +87,14 @@ function onListening() {
 
 // Use gratefull shutdown with PM2, Forever, etc.
 async function gracefulShutdown(signal) {
+  let dbErr = false
   console.log(`Received '${signal}'...Shutting down.`)
+  await dbConn.stop((err) => {
+    dbErr = err
+  })
   await server.close(async () => {
     console.log(`Server is closed.`)
-    await dbConn.stop((err) => {
-      process.exit(err ? 1 : 0)
-    })
+    process.exit(dbErr ? 1 : 0)
   })
 }
 
@@ -100,7 +102,7 @@ process.on(`SIGINT`, () => {
   gracefulShutdown(`SIGINT`)
 })
 process.on(`SIGTERM`, () => {
-  gracefulShutdown(`SIGTERM`)
+  process.exit(1)
 })
 process.on(`SIGHUP`, () => {
   gracefulShutdown(`SIGHUP`)
