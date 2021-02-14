@@ -11,7 +11,8 @@
     "restart": "pm2 restart ecosystem.config.js",
     "restart_update": "pm2 restart ecosystem.config.js --update_env",
     "reload": "pm2 reload ecosystem.config.js",
-    "delete": "pm2 delete ecosystem.config.js"
+    "delete": "pm2 delete ecosystem.config.js",
+    "preinstall": "npx npm-force-resolutions"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,11 @@
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "pg": "^8.5.1",
-    "pug": "^3.0.0"
+    "pug": "^3.0.0",
+    "sequelize": "^6.5.0"
+  },
+  "resolutions": {
+    "node-forge": "0.10.0"
   },
   "keywords": [
     "cbrm",
@@ -31,12 +36,12 @@
   "author": "Jerry Shockley and Jenna Shockley",
   "license": "MIT",
   "devDependencies": {
-    "reload": "^3.1.1",
-    "eslint": "^7.19.0",
+    "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "pm2": "^4.5.4",
     "npm-run-all": "^4.1.5",
-    "parcel-bundler": "^1.12.4"
+    "parcel-bundler": "^1.12.4",
+    "pm2": "^4.5.4",
+    "reload": "^3.1.1"
   }
 }
