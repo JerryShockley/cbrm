@@ -17,4 +17,4 @@ const dbEnv = {
   },
 }
 
-export default dbEnv
+module.exports.default = dbEnv
