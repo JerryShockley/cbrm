@@ -9,7 +9,8 @@ const debug = require(`debug`)(`cbrm:server`)
 const http = require(`http`)
 const Sql = require(`sequelize`)
 const { dbEnv } = require(`../config/db_config.js`)
-const { usr, passwd, db, lhost, ldialect, dbport } = dbEnv[process.env.NODE_ENV]
+const mode = process.env.NODE_ENV || `development`
+const { usr, passwd, db, lhost, ldialect, dbport } = dbEnv[mode]
 const sql = new Sql(db, usr, passwd, {
   host: lhost,
   port: dbport,
@@ -29,7 +30,7 @@ sql
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || `3000`)
+const port = normalizePort(process.env.PORT || `8090`)
 app.set(`port`, port)
 
 /**
