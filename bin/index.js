@@ -7,7 +7,23 @@
 const app = require(`../app`)
 const debug = require(`debug`)(`cbrm:server`)
 const http = require(`http`)
-const { dbConn } = app.dbConn
+const Sql = require(`sequelize`)
+const { dbEnv } = require(`../config/db_config.js`)
+const { usr, passwd, db, lhost, ldialect, dbport } = dbEnv[process.env.NODE_ENV]
+const sql = new Sql(db, usr, passwd, {
+  host: lhost,
+  port: dbport,
+  dialect: ldialect,
+})
+
+sql
+  .authenticate()
+  .then(() => {
+    console.log(`DB connection established successfully`)
+  })
+  .catch((err) => {
+    console.log(`Failed to establish DB connection!\n${err}`)
+  })
 
 /**
  * Get port from environment and store in Express.
@@ -87,14 +103,11 @@ function onListening() {
 
 // Use gratefull shutdown with PM2, Forever, etc.
 async function gracefulShutdown(signal) {
-  let dbErr = false
   console.log(`Received '${signal}'...Shutting down.`)
-  await dbConn.stop((err) => {
-    dbErr = err
-  })
+  sql.close().then(() => console.log(`DB server shutdown successfully`))
   await server.close(async () => {
-    console.log(`Server is closed.`)
-    process.exit(dbErr ? 1 : 0)
+    console.log(`NodeJS server is shutdown successfully.`)
+    process.exit(0)
   })
 }
 
