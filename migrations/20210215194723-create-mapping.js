@@ -1,6 +1,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable(`Mappings`, {
+    await queryInterface.createTable(`mappings`, {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -8,25 +8,33 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       brand: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      notes: DataTypes.STRING(1024),
+      notes: Sequelize.STRING(1024),
       order: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       cartesianX: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       cartesianY: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       duration: {
-        type: DataTypes.Integer,
+        type: Sequelize.Integer,
         allowNull: false,
+      },
+      respondentId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: `respondents`,
+          key: `id`,
+        },
       },
       createdAt: {
         allowNull: false,
@@ -39,6 +47,6 @@ module.exports = {
     })
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable(`Mappings`)
+    await queryInterface.dropTable(`mappings`)
   },
 }
