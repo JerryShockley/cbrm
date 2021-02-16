@@ -5,13 +5,13 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGEr,
+        type: Sequelize.INTEGER,
       },
       respondentId: {
-        type: Sequelize.STrING,
+        type: Sequelize.STRING,
       },
       projectId: {
-        type: Sequelize.INTEGEr,
+        type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: `projects`,

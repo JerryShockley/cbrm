@@ -8,7 +8,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       projectId: {
-        type: Sequelizes.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       brand: {

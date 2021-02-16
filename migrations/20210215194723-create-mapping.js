@@ -25,7 +25,7 @@ module.exports = {
         allowNull: false,
       },
       duration: {
-        type: Sequelize.Integer,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       respondentId: {
