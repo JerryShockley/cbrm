@@ -63,3 +63,6 @@ typings/
 # Apple Spotlight index file.
 **/.DS_Store
 **/.cache
+
+# Vim stored session data.
+Session.vim
