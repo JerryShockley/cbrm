@@ -1,0 +1,47 @@
+extends layout
+
+block links
+  link(rel='stylesheet' href='/stylesheets/mapping.css')
+  link(rel='stylesheet' href='/stylesheets/style.css')
+
+block content
+  .container
+    header
+      h1.
+        Sunna's Cool App
+      p#page-prompt.
+        This is our prompt. This app is a front-end only prototype at this point. It currently lacks some small bug fixes along with a lot of polish that we are all used to seeing in our web interactions. This is primary functionality of this mapping page.
+
+    main.main
+      svg#mysvg(xmlns='http://www.w3.org/2000/svg' viewBox='-101 -101 202 202' preserveAspectRatio='xMidYMid meet')
+        circle(cx='0' cy='0' r='.1' stroke='black' fill='black')
+        circle(cx='0' cy='0' r='25' stroke='#ff4d4d' stroke-width='0.3' fill='none')
+        circle(cx='0' cy='0' r='50' stroke='#ff4d4d' stroke-width='0.3' fill='none')
+        circle(cx='0' cy='0' r='75' stroke='#ff4d4d' stroke-width='0.3' fill='none')
+        circle(cx='0' cy='0' r='100' stroke='#ff4d4d' stroke-width='0.3' fill='none')
+        line(x1='-100' y1='0' x2='100' y2='0' stroke='#cccccc' stroke-width='0.3')
+        line(x1='0' y1='100' x2='0' y2='-100' stroke='#cccccc' stroke-width='0.3')
+    .brands
+      h3#target-brand-label.
+        Your Brand
+      p#target-brand.
+        The Target Brand
+      h4.
+        Competing Brands
+      ol#brand-list.
+
+    #buttons
+      button#submit Submit
+  #brand-modal
+    .modal-content
+      label(for='brand-name') Brand Name:
+      input#brand-name(type='text' name='brand-name' placeholder='The name of the Brand you are mapping.')
+      br
+      br
+      label(for='brand-notes') Notes:
+      input#brand-notes(type='textarea' name='brand-notes' rows='4' cols='40' placeholder='Additional thoughts on this mapping.')
+      br
+      br
+      //  <input type="submit" value="Submit">
+      button.save Save
+  script(src='/javascripts/mapping.js')
