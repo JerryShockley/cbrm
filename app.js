@@ -3,11 +3,11 @@ const createError = require(`http-errors`)
 const express = require(`express`)
 const path = require(`path`)
 const logger = require(`morgan`)
-const { DbConn } = require(`pg`)
-const dbConn = {} // new DbConn()
 
 const indexRouter = require(`./routes/index`)
-const usersRouter = require(`./routes/users`)
+const projectsRouter = require(`./routes/projects`)
+const respondentsRouter = require(`./routes/respondents`)
+const mappingsRouter = require(`./routes/mappings`)
 
 const app = express()
 
@@ -21,7 +21,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, `public`)))
 
 app.use(`/`, indexRouter)
-app.use(`/users`, usersRouter)
+app.use(`/projects`, projectsRouter)
+app.use(`/respondents`, respondentsRouter)
+app.use(`/mappings`, mappingsRouter)
 
 // Set static html file path
 app.use(express.static(`public`))
@@ -43,4 +45,3 @@ app.use((err, req, res, next) => {
 })
 
 module.exports = app
-module.exports.dbConn = dbConn
