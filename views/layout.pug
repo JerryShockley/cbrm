@@ -2,6 +2,17 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    block links
+      link(rel='stylesheet', href=`/stylesheets/style.css`)
   body
     block content
+
+  footer
+    h5 Contact
+    ul.contact(style=`list-style-type:none;`)
+      li   Radboud University
+      li   Houtlaan 4
+      li   6525 XZ Nigmegen
+      li   The Netherlands
+      li   +31 24 361 61 61
+    block footer
