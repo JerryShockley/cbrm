@@ -12,7 +12,7 @@
     "restart_update": "pm2 restart ecosystem.config.js --update_env",
     "reload": "pm2 reload ecosystem.config.js",
     "delete": "pm2 delete ecosystem.config.js",
-    "preinstall": "npx npm-force-resolutions"
+    "preinstall": "npx npm-force-resolutions",
     "devstart": "nodemon ./bin/index.js",
     "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
   },
