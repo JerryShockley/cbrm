@@ -44,4 +44,7 @@ block content
       br
       //  <input type="submit" value="Submit">
       button.save Save
-  script(src='/javascripts/mapping.js')
+  -  var myjs = "/javascripts/#{jsFile}"
+  h4= `/javascript/${jsFile}`
+  script(src="/javascripts/" + jsFile)
+  script(src='https://unpkg.com/axios/dist/axios.min.js')
