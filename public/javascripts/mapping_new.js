@@ -62,6 +62,44 @@ const colors = [
 
 svg.addEventListener(`pointerdown`, addDataPointHandler)
 saveButton.addEventListener(`click`, saveButtonHandler, false)
+submitButton.addEventListener(`click`, submitButtonHandler, false)
+
+function submitButtonHandler(event) {
+  const dbPoints = []
+
+  brands.forEach((point, key) => {
+    dbPoints.push(filterDbMappingObject(point))
+  })
+  sendDbPoints(dbPoints)
+}
+
+function sendDbPoints(dbPoints) {
+  axios.post(`/mappings`, { points: dbPoints }).then(
+    (response) => {
+      alert(`Data successfully saved.`)
+    },
+    (error) => {
+      alert(`Failed: ${error}`)
+    }
+  )
+}
+
+function filterDbMappingObject(point) {
+  const dbKeynames = [
+    `brand`,
+    `notes`,
+    `order`,
+    `cartesianX`,
+    `cartesianY`,
+    `duration`,
+  ]
+  const dbPoint = {}
+
+  dbKeynames.forEach((dbKey) => {
+    dbPoint[dbKey] = point[dbKey]
+  })
+  return dbPoint
+}
 
 function addDataPointHandler(event) {
   if (pointCount === maxPointCount) return
@@ -80,7 +118,8 @@ function createdataPointObject(event) {
   return {
     brand: tmpKey,
     notes: ``,
-    pid: pointCount,
+    order: pointCount,
+    duration: 0,
     // dom screen coordinates
     screenX: event.clientX,
     screenY: event.clientY,
@@ -145,7 +184,7 @@ function completePartialMapEntry(userInput) {
   partialDataPoint = brands.get(tmpKey)
   partialDataPoint.brand = userInput.brand
   partialDataPoint.notes = userInput.notes
-  brands.delete(partialDataPoint.key) // Must do this before adding new due to size limit.
+  brands.delete(tmpKey) // Must do this before adding new due to size limit.
   brands.set(partialDataPoint.brand, partialDataPoint)
   points.set(stringifyCoordinates(partialDataPoint.svgX, partialDataPoint.svgY))
 }
