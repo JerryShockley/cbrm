@@ -45,6 +45,8 @@ block content
       //  <input type="submit" value="Submit">
       button.save Save
   -  var myjs = "/javascripts/#{jsFile}"
-  h4= `/javascript/${jsFile}`
   script(src="/javascripts/" + jsFile)
   script(src='https://unpkg.com/axios/dist/axios.min.js')
+  script.
+    var points = !{strPoints} || []
+  h4= points
