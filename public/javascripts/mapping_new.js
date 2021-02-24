@@ -74,9 +74,9 @@ function submitButtonHandler(event) {
 }
 
 function sendDbPoints(dbPoints) {
-  axios.post(`/mappings`, { points: dbPoints }).then(
+  axios.post(`/mappings/create`, { points: dbPoints }).then(
     (response) => {
-      alert(`Data successfully saved.`)
+      // alert(`Data successfully saved.`)
     },
     (error) => {
       alert(`Failed: ${error}`)
