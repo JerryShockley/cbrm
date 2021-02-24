@@ -104,7 +104,9 @@ function onListening() {
 // Use gratefull shutdown with PM2, Forever, etc.
 async function gracefulShutdown(signal) {
   console.log(`Received '${signal}'...Shutting down.`)
-  sql.close().then(() => console.log(`DB server shutdown successfully`))
+  await sql.close().then(() => {
+    console.log(`DB server shutdown successfully`)
+  })
   await server.close(async () => {
     console.log(`NodeJS server is shutdown successfully.`)
     process.exit(0)
