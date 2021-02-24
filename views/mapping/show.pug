@@ -1,0 +1,16 @@
+extends ../layout.pug
+
+block links
+  link(rel='stylesheet' href='/stylesheets/mapping.css')
+  link(rel='stylesheet' href='/stylesheets/style.css')
+
+block content
+  .container
+    header
+      h1.
+        title
+      p#page-prompt= prompt
+    main.main
+      include includes/mapping_svg.pug
+    .brands
+      include includes/mapping_brandnames.pug

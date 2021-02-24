@@ -1,0 +1,31 @@
+extends ../layout.pug
+
+block links
+  link(rel='stylesheet' href='/stylesheets/mapping.css')
+  link(rel='stylesheet' href='/stylesheets/style.css')
+
+block content
+  h1= title
+  .container
+    header
+      p#page-prompt= myprompt
+    main.main
+      include includes/mapping_svg.pug
+    .brands
+      include includes/mapping_brandnames.pug
+
+    #buttons
+      button#submit Submit
+  #brand-modal
+    .modal-content
+      label(for='brand-name') Brand Name:
+      input#brand-name(type='text' name='brand-name' placeholder='The name of the Brand you are mapping.')
+      br
+      br
+      label(for='brand-notes') Notes:
+      input#brand-notes(type='textarea' name='brand-notes' rows='4' cols='40' placeholder='Additional thoughts on this mapping.')
+      br
+      br
+      button.save Save
+  script(src="/javascripts/mapping_new.js")
+  script(src="https://unpkg.com/axios/dist/axios.min.js")
