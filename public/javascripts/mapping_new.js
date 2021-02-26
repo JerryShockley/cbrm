@@ -39,26 +39,8 @@ const tmpKey = `partial`
 let pointCount = 0
 // Stores the maximum number of points the user is allowed to add.
 // Note this value cannot be greater than the number of elements
-// in the colors array below.
+// in styled in mapping.css.
 const maxPointCount = 12
-// The color of the points rendered on the grid. These colors
-// are used once per data point in the order shown. These colors
-// correspond to matching colors in cbrm.css that is used for
-// the brand names. They should always match each other.
-const colors = [
-  `Red`,
-  `DarkOrange`,
-  `Magenta`,
-  `BlueViolet`,
-  `LimeGreen`,
-  `Teal`,
-  `Cyan`,
-  `DodgerBlue`,
-  `SandyBrown`,
-  `SaddleBrown`,
-  `Maroon`,
-  `Navy`,
-]
 
 svg.addEventListener(`pointerdown`, addDataPointHandler)
 saveButton.addEventListener(`click`, saveButtonHandler, false)
@@ -159,9 +141,8 @@ function renderDataPoint() {
   newCircle.setAttribute(`cx`, dataPoint.svgX)
   newCircle.setAttribute(`cy`, dataPoint.svgY)
   newCircle.setAttribute(`r`, 1)
-  newCircle.setAttribute(`fill`, colors[pointCount - 1])
   newCircle.setAttribute(`class`, `point`)
-  newCircle.setAttribute(`id`, `pt${pointCount}`)
+  newCircle.setAttribute(`id`, `pt${dataPoint.order}`)
   svg.appendChild(newCircle)
 }
 
@@ -199,7 +180,7 @@ function renderBrandName() {
   const dataPoints = Array.from(brands.values()) // Make it easy to get last dP.
   const dataPoint = dataPoints.pop() // gets the last dataPoint added.
   newBrand.setAttribute(`class`, `brand`)
-  newBrand.setAttribute(`id`, `brand${pointCount}`)
+  newBrand.setAttribute(`id`, `brand${dataPoint.order}`)
   newBrand.textContent = dataPoint.brand
   brandList.appendChild(newBrand)
 }
