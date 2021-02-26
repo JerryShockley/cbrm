@@ -1,5 +1,17 @@
 :root {
   box-sizing: border-box;
+  --color1: Red;
+  --color2: DarkOrange;
+  --color3: Magenta;
+  --color4: BlueViolet;
+  --color5: LimeGreen;
+  --color6: Teal;
+  --color7: Cyan;
+  --color8: DodgerBlue;
+  --color9: SandyBrown;
+  --color10: SaddleBrown;
+  --color11: Maroon;
+  --color12: Navy;
  }
 *, ::before, ::after {
   box-sizing: inherit;
@@ -97,41 +109,77 @@ header {
    background-color: green;
    color: white;
  }
+ #pt1 {
+   fill: var(--color1);
+ }
+ #pt2 {
+   fill: var(--color2);
+ }
+ #pt3 {
+   fill: var(--color3);
+ }
+ #pt4 {
+   fill: var(--color4);
+ }
+ #pt5 {
+   fill: var(--color5);
+ }
+ #pt6 {
+   fill: var(--color6);
+ }
+ #pt7 {
+   fill: var(--color7);
+ }
+ #pt8 {
+   fill: var(--color8);
+ }
+ #pt9 {
+   fill: var(--color9);
+ }
+ #pt10 {
+   fill: var(--color10);
+ }
+ #pt11 {
+   fill: var(--color11);
+ }
+ #pt12 {
+   fill: var(--color12);
+ }
  #brand1 {
-   color: Red;
+   color: var(--color1);
  }
  #brand2 {
-   color: DarkOrange;
+   color: var(--color2);
  }
  #brand3 {
-   color: Magenta;
+   color: var(--color3);
  }
  #brand4 {
-   color: BlueViolet;
+   color: var(--color4);
  }
  #brand5 {
-   color: LimeGreen;
+   color: var(--color5);
  }
  #brand6 {
-   color: Teal;
+   color: var(--color6);
  }
  #brand7 {
-   color: Cyan;
+   color: var(--color7);
  }
  #brand8 {
-   color: DodgerBlue;
+   color: var(--color8);
  }
  #brand9 {
-   color: SandyBrown;
+   color: var(--color9);
  }
  #brand10 {
-   color: SaddleBrown;
+   color: var(--color10);
  }
  #brand11 {
-   color: Maroon;
+   color: var(--color11);
  }
  #brand12 {
-   color: Navy;
+   color: var(--color12);
  }
  #brand-modal {
   display: none; /* Hidden by default */
