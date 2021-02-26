@@ -14,15 +14,14 @@ exports.mappingCreate = (req, res) => {
   console.log(JSON.stringify(req.body, null, 2))
   respondentId += 1
   data.push(req.body.points)
-  res.redirect(`${respondentId}`)
+  res.json({ location: `/mappings/${respondentId}` })
 }
 
 exports.mappingShow = (req, res) => {
   // respondent = Respondent.build
-  console.log(`Received: ID = ${req.params.id}`)
   const { id } = req.params
   res.render(`mapping/show`, {
     points: data[id - 1],
-    title: `Relationship Mapping for: ${id}`,
+    title: `Relationship Mapping for Respondent #${id}`,
   })
 }
