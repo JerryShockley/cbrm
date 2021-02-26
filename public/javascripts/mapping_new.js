@@ -58,7 +58,11 @@ function submitButtonHandler(event) {
 function sendDbPoints(dbPoints) {
   axios.post(`/mappings/create`, { points: dbPoints }).then(
     (response) => {
-      // alert(`Data successfully saved.`)
+      const cport = window.location.port
+      const cportStr = cport ? `:${cport}` : ``
+      console.log(`port = ${cport}`)
+      const showUrl = `${window.location.protocol}//${window.location.hostname}${cportStr}${response.data.location}`
+      window.location.assign(showUrl)
     },
     (error) => {
       alert(`Failed: ${error}`)
