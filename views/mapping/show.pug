@@ -23,4 +23,4 @@ block content
       include includes/mapping_brandnames.pug
       ol#brand-list
         each pt in points
-          li(class='brand' id=`brand${pt.order}`) pt.brand
+          li(class='brand' id=`brand${pt.order}`)= pt.brand
