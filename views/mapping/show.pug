@@ -7,10 +7,20 @@ block links
 block content
   .container
     header
-      h1.
-        title
+      h1= title
       p#page-prompt= prompt
     main.main
       include includes/mapping_svg.pug
+        each pt in points
+          circle(
+            class='point'
+            id=`pt${pt.order}`
+            cx= String(pt.cartesianX)
+            cy= String(-pt.cartesianY)
+            r='1'
+          )
     .brands
       include includes/mapping_brandnames.pug
+      ol#brand-list
+        each pt in points
+          li(class='brand' id=`brand${pt.order}`) pt.brand
