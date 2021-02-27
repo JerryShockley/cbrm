@@ -15,12 +15,22 @@ module.exports = (sequelize, DataTypes) => {
   Respondent.init(
     {
       respondentId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
+      },
+      pointCount: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      duration: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
       },
     },
     {
       sequelize,
+      timestamps: true,
       modelName: `Respondent`,
     }
   )
