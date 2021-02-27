@@ -15,12 +15,17 @@ module.exports = (sequelize, DataTypes) => {
     {
       projectId: {
         type: DataTypes.STRING,
+        autoIncrement: true,
         allowNull: false,
       },
-      brand: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       sequelize,
+      timestamps: true,
       modelName: `Project`,
     }
   )
