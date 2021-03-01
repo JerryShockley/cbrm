@@ -1,15 +1,30 @@
+// const Project = require(`./project`)
+// const Mapping = require(`./mapping`)
 const { Model } = require(`sequelize`)
+
 module.exports = (sequelize, DataTypes) => {
   class Respondent extends Model {
+    static getMappingsCount(pmappings) {
+      return pmappings.length
+    }
+
+    static sumMappingDurations(pmappings) {
+      const sumReducer = (accumulator, currentMapping) => {
+        return accumulator + currentMapping.duration
+      }
+      return pmappings.reduce(sumReducer, 0)
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      Respondent.belongsTo(models.Project)
-      Respondent.hasMany(models.Mapping)
+      Respondent.hasMany(models.Mapping, {
+        as: `mappings`,
+        foreignKey: `respondentId`,
+      })
     }
   }
   Respondent.init(
@@ -17,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       respondentId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        autoIncrement: true,
+        unique: true,
       },
       pointCount: {
         type: DataTypes.INTEGER,
@@ -32,6 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       timestamps: true,
       modelName: `Respondent`,
+      tableName: `respondents`,
     }
   )
   return Respondent

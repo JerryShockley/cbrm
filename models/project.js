@@ -1,3 +1,4 @@
+// const Respondent = require(`./respondent`)
 const { Model } = require(`sequelize`)
 module.exports = (sequelize, DataTypes) => {
   class Project extends Model {
@@ -8,15 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Project.hasMany(models.Respondent)
+      Project.hasMany(models.Respondent, {
+        as: `respondents`,
+        foreignKey: `projectId`,
+      })
     }
   }
   Project.init(
     {
       projectId: {
         type: DataTypes.STRING,
-        autoIncrement: true,
         allowNull: false,
+        unique: true,
       },
       name: {
         type: DataTypes.STRING,
@@ -27,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       timestamps: true,
       modelName: `Project`,
+      tableName: `projects`,
     }
   )
   return Project

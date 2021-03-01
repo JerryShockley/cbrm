@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Mapping.belongsTo(models.Respondent)
     }
   }
+
   Mapping.init(
     {
       brand: {
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       duration: {
-        type: DataTypes.Integer,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
@@ -39,6 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       timestamps: true,
       modelName: `Mapping`,
+      tableName: `mappings`,
     }
   )
   return Mapping
