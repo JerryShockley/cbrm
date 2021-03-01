@@ -1,5 +1,4 @@
-// const Project = require(`./project`)
-// const Mapping = require(`./mapping`)
+const { formatDuration } = require(`../lib/string`)
 const { Model } = require(`sequelize`)
 
 module.exports = (sequelize, DataTypes) => {
@@ -16,9 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     getDurationString() {
-      const time = new Date(null)
-      time.setSeconds(this.duration)
-      return time.toISOString().substr(11, 8)
+      return formatDuration(this.duration)
     }
 
     /**
