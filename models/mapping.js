@@ -1,6 +1,14 @@
+const { formatDuration } = require(`../lib/string`)
 const { Model } = require(`sequelize`)
 module.exports = (sequelize, DataTypes) => {
   class Mapping extends Model {
+    // Concatonates brand, coordinates, and time
+    getExtendedBrandString() {
+      const timeStr = formatDuration(this.duration)
+      const coordinates = `(${this.cartesianX}, ${this.cartesianY})`
+      return `${this.brand}: ${coordinates}, ${timeStr}`
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
