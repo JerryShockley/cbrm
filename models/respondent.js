@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       return pmappings.reduce(sumReducer, 0)
     }
 
+    getDurationString() {
+      const time = new Date(null)
+      time.setSeconds(this.duration)
+      return time.toISOString().substr(11, 8)
+    }
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
