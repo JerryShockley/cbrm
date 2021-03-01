@@ -7,24 +7,7 @@
 const app = require(`../app`)
 const debug = require(`debug`)(`cbrm:server`)
 const http = require(`http`)
-const Sql = require(`sequelize`)
-const mode = process.env.NODE_ENV || `development`
-const config = require(`${__dirname}/../config/config.json`)[mode]
-const sql = new Sql(config.database, config.username, config.password, {
-  host: config.host,
-  port: config.port,
-  dialect: config.dialect,
-})
-
-sql
-  .authenticate()
-  .then(() => {
-    console.log(`DB connection established successfully`)
-  })
-  .catch((err) => {
-    console.log(`Failed to establish DB connection!\n${err}`)
-  })
-
+const db = require(`../models/index`)
 /**
  * Get port from environment and store in Express.
  */
@@ -104,7 +87,7 @@ function onListening() {
 // Use gratefull shutdown with PM2, Forever, etc.
 async function gracefulShutdown(signal) {
   console.log(`Received '${signal}'...Shutting down.`)
-  await sql.close().then(() => {
+  await db.sequelize.close().then(() => {
     console.log(`DB server shutdown successfully`)
   })
   await server.close(async () => {
@@ -122,5 +105,3 @@ process.on(`SIGTERM`, () => {
 process.on(`SIGHUP`, () => {
   gracefulShutdown(`SIGHUP`)
 })
-
-module.exports.sql = sql
