@@ -20,7 +20,8 @@ block content
             r='1'
           )
     .brands
+      h5 Total Duration: #{duration}
       include includes/mapping_brandnames.pug
       ol#brand-list
         each pt in points
-          li(class='brand' id=`brand${pt.order}`)= pt.brand
+          li(class='brand' id=`brand${pt.order}`)= pt.getExtendedBrandString()
