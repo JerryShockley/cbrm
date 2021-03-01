@@ -15,7 +15,7 @@ module.exports = {
         projectId: {
           type: Sequelize.INTEGER,
           allowNull: false,
-          autoIncrement: true,
+          unique: true,
         },
         createdAt: {
           allowNull: false,
@@ -26,8 +26,6 @@ module.exports = {
           type: Sequelize.DATE,
         },
       })
-      const seqQuery = `ALTER SEQUENCE "projects_projectId_seq" restart with 100`
-      await queryInterface.sequelize.query(seqQuery, `RAW`)
 
       return Promise.resolve()
     } catch (err) {

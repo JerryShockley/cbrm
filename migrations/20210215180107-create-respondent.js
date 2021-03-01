@@ -11,7 +11,7 @@ module.exports = {
         respondentId: {
           type: Sequelize.INTEGER,
           allowNull: false,
-          autoIncrement: true,
+          unique: true,
         },
         pointCount: {
           type: Sequelize.INTEGER,
@@ -38,8 +38,6 @@ module.exports = {
           type: Sequelize.DATE,
         },
       })
-      const seqQuery = `ALTER SEQUENCE "respondents_respondentId_seq" restart with 1000`
-      await queryInterface.sequelize.query(seqQuery, `RAW`)
 
       return Promise.resolve()
     } catch (err) {
