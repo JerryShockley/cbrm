@@ -6,3 +6,27 @@ body {
 a {
   color: #00B7FF;
 }
+ #buttons button + button {
+   margin-left: 1.5em;
+ }
+ .button {
+   display: block;
+   width: 12%;
+   text-align: center;
+   text-decoration: none;
+   padding: 0.8em 1em;
+   border-radius: 0.5em;
+ }
+.button {
+  background-color: Crimson;
+  border-radius: 5px;
+  color: white;
+  padding: .5em;
+  text-decoration: none;
+}
+
+.button:focus,
+.button:hover {
+  background-color: FireBrick;
+  color: White;
+}
