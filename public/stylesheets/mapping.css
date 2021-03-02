@@ -94,17 +94,6 @@ header {
    width: 100%;
    margin: 2em;
  }
- #buttons button + button {
-   margin-left: 1.5em;
- }
- #buttons button {
-   display: block;
-   width: 12%;
-   text-align: center;
-   text-decoration: none;
-   padding: 0.8em 1em;
-   border-radius: 0.5em;
- }
  button #submit {
    background-color: green;
    color: white;
@@ -246,4 +235,12 @@ div {
 #page-prompt {
   margin: 1em 4em;
   text-align: left;
+}
+#exdata, #exnotes {
+  color: black;
+  margin-top: 0;
+  padding-top: 0;
+}
+#exname {
+  font-size: 1.3em;
 }
