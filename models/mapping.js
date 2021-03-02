@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     getExtendedBrandString() {
       const timeStr = formatDuration(this.duration)
       const coordinates = `(${this.cartesianX}, ${this.cartesianY})`
-      return `${this.brand}: ${coordinates}, ${timeStr}`
+      return `${coordinates}, ${timeStr}`
     }
 
     /**
