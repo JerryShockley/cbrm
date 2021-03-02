@@ -24,4 +24,7 @@ block content
       include includes/mapping_brandnames.pug
       ol#brand-list
         each pt in points
-          li(class='brand' id=`brand${pt.order}`)= pt.getExtendedBrandString()
+          li(class='brand' id=`brand${pt.order}`)
+            p.exbrand(id=`exname`)= pt.brand
+            p.exbrand(id=`exdata`)= pt.getExtendedBrandString()
+            p.exbrand(id=`exnotes`)= pt.notes
