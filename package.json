@@ -28,7 +28,7 @@
     "morgan": "^1.10.0",
     "npm-force-resolutions": "^0.0.6",
     "pg": "^8.5.1",
-    "pug": "^3.0.0",
+    "pug": ">=3.0.2",
     "sequelize": "^6.5.0"
   },
   "resolutions": {
