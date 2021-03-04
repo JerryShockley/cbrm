@@ -21,7 +21,6 @@ body * + * {
 }
 html, body {
   height: 100%;
-  overflow: hidden;
 }
 body {
   display: block;
@@ -33,7 +32,7 @@ body {
   width: 96vw;
   height: 100vh;
   color: #333;
-  overflow: hidden;
+  overflow: scroll;
 }
 .container {
   display: grid;
@@ -49,12 +48,13 @@ header {
  text-align: center;
 }
 .main {
+  display: block
   grid-column: 1 / 2;
   grid-row: 2 / 3;
-  min-height: 0;
-  min-width: 0;
+  min-width: 200px;
 }
 .brands {
+  display: block;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   font-size: 0.8em;
@@ -73,6 +73,7 @@ header {
 }
 
 #mysvg {
+  display: block;
   width: auto;
   margin-right: 2em;
   height: 100%;
@@ -82,12 +83,12 @@ header {
 }
 
 
-@media (max-aspect-ratio: 1/1) {
-  #mysvg {
-    width: 100%;
-    height: auto;
-  }
-}
+/* @media (max-aspect-ratio: 1/1) { */
+/*   #mysvg { */
+/*     width: auto; */
+/*     height: auto; */
+/*   } */
+/* } */
 
  #buttons {
    /* display: flex; */
@@ -247,6 +248,13 @@ div {
 .exbrand {
   margin-bottom: .5em;
 }
+#exnotes {
+  display: block;
+}
 h5 {
   font-size: 1em;
+}
+#metext {
+  font-size: 0.5em;
+  text-color: red;
 }
