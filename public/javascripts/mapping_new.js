@@ -70,6 +70,15 @@ function sendDbPoints(dbPoints) {
   )
 }
 
+function calculateRadius(x, y) {
+  return Math.sqrt(x * x + y * y)
+}
+
+// Coordinate radius from center is <= 100.
+function isValidCoordinate(x, y) {
+  return calculateRadius(x, y) <= 100
+}
+
 function filterDbMappingObject(point) {
   const dbKeynames = [
     `brand`,
@@ -89,8 +98,9 @@ function filterDbMappingObject(point) {
 
 function addDataPointHandler(event) {
   if (pointCount === maxPointCount) return
-  pointCount += 1 // must be 1st line because it changes global
   const dataPoint = createdataPointObject(event)
+  if (!isValidCoordinate(dataPoint.svgX, dataPoint.svgY)) return
+  pointCount += 1 // must be 1st line because it changes global
   brands.set(dataPoint.brand, dataPoint)
   renderDataPoint(dataPoint)
   modalDialog.style.display = `block`
@@ -104,7 +114,7 @@ function createdataPointObject(event) {
   return {
     brand: tmpKey,
     notes: ``,
-    order: pointCount,
+    order: pointCount + 1,
     duration: 0,
     // dom screen coordinates
     screenX: event.clientX,
