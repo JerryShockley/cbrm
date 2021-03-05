@@ -20,10 +20,12 @@ const brandList = document.getElementById(`brand-list`)
 const modalDialog = document.getElementById(`brand-modal`)
 // HTML node used to capture the click event of the page's submit button.
 const submitButton = document.getElementById(`submit`)
-// MTML node used to capture the click event of the dialogs save button.
+// HTML node used to capture the click event of the dialog's cancel button.
+const cancelButton = modalDialog.getElementsByClassName(`cancel`)[0]
+// HTML node used to capture the click event of the dialogs save button.
 const saveButton = modalDialog.getElementsByClassName(`save`)[0]
 // HTML node used to access the dialog brand name input.
-const brandName = document.getElementById(`brand-name`)
+const brandName = document.getElementById(`brand-name-input`)
 // HTML node used to access the dialog brand notes input.
 const brandNotes = document.getElementById(`brand-notes`)
 // Map of dataPoint values with a stringifyed svg coordinates key.
@@ -44,11 +46,12 @@ const maxPointCount = 12
 
 svg.addEventListener(`pointerdown`, addDataPointHandler)
 saveButton.addEventListener(`click`, saveButtonHandler, false)
+cancelButton.addEventListener(`click`, cancelButtonHandler, false)
 submitButton.addEventListener(`click`, submitButtonHandler, false)
 
 function submitButtonHandler(event) {
+  if (brands.size === 0) return
   const dbPoints = []
-
   brands.forEach((point, key) => {
     dbPoints.push(filterDbMappingObject(point))
   })
@@ -70,6 +73,7 @@ function sendDbPoints(dbPoints) {
   )
 }
 
+// Used to determine the coordinates' distance from the center.
 function calculateRadius(x, y) {
   return Math.sqrt(x * x + y * y)
 }
@@ -79,6 +83,7 @@ function isValidCoordinate(x, y) {
   return calculateRadius(x, y) <= 100
 }
 
+// Extracts just the information stored in the db.
 function filterDbMappingObject(point) {
   const dbKeynames = [
     `brand`,
@@ -89,7 +94,6 @@ function filterDbMappingObject(point) {
     `duration`,
   ]
   const dbPoint = {}
-
   dbKeynames.forEach((dbKey) => {
     dbPoint[dbKey] = point[dbKey]
   })
@@ -100,11 +104,13 @@ function addDataPointHandler(event) {
   if (pointCount === maxPointCount) return
   const dataPoint = createdataPointObject(event)
   if (!isValidCoordinate(dataPoint.svgX, dataPoint.svgY)) return
-  pointCount += 1 // must be 1st line because it changes global
+  pointCount += 1 // position dependent check carefully before moving.
   brands.set(dataPoint.brand, dataPoint)
   renderDataPoint(dataPoint)
   modalDialog.style.display = `block`
-  brandName.focus()
+  window.setTimeout(() => {
+    document.getElementById(`brand-name-input`).focus()
+  }, 0)
 }
 
 // Creates a partial dataPoint object because we haven't
@@ -156,11 +162,79 @@ function renderDataPoint() {
   newCircle.setAttribute(`cy`, dataPoint.svgY)
   newCircle.setAttribute(`r`, 1)
   newCircle.setAttribute(`class`, `point`)
-  newCircle.setAttribute(`id`, `pt${dataPoint.order}`)
+  newCircle.setAttribute(`id`, pointIdStr(dataPoint.order))
   svg.appendChild(newCircle)
 }
 
+function handleDeleteButton(event) {
+  // Get the li innerText and Strip the button innerText (Delete) off.
+  brand = event.path[1].innerText.replace(/Delete$/, ``)
+  deleteDataPoint(brand)
+}
+
+function deleteDataPoint(brandKey) {
+  if (!brands.has(brandKey)) return
+  const point = removeMapElements(brandKey)
+  removeDataPointRendering(point)
+  pointCount -= 1
+  const deletionIdx = point.order - 1
+  // Renumber DOM ids of any points after deletion point to fill the gap
+  // created by the deletion keeping id numbers consecutive.
+  if (deletionIdx <= brands.size - 1) {
+    adjustDataPointIds(deletionIdx)
+  }
+}
+
+function replaceDomElementId(oldId, newId) {
+  const domElement = document.querySelector(`#${oldId}`)
+  domElement.id = newId
+}
+
+function adjustDataPointIds(startIdx) {
+  const dataPoints = Array.from(brands.values())
+  dataPoints.slice(startIdx).forEach((pt) => {
+    pt.order -= 1
+    replaceDomElementId(brandIdStr(pt.order + 1), brandIdStr(pt.order))
+    replaceDomElementId(pointIdStr(pt.order + 1), pointIdStr(pt.order))
+  })
+}
+
+function removeDataPointRendering(point) {
+  const domBrand = document.querySelector(brandIdStr(point.order, true))
+  domBrand.parentNode.removeChild(domBrand)
+  const domPoint = document.querySelector(pointIdStr(point.order, true))
+  domPoint.parentNode.removeChild(domPoint)
+}
+
+function brandIdStr(idx, prependHashChar = false) {
+  hchar = prependHashChar ? `#` : ``
+  return `${hchar}brand${idx}`
+}
+
+function pointIdStr(idx, prependHashChar = false) {
+  hchar = prependHashChar ? `#` : ``
+  return `${hchar}pt${idx}`
+}
+
+// Removes the element identified by brandkey from both the points and brands
+// Maps.
+function removeMapElements(brandKey) {
+  const item = brands.get(brandKey)
+  // We only need to do this if this is not a partial entry
+  if (brandKey !== tmpKey) {
+    points.delete(stringifyCoordinates(item.svgX, item.svgY))
+  }
+  brands.delete(brandKey)
+  return item
+}
+
 // **************   Modal Dialog  ***************
+function cancelButtonHandler(event) {
+  const point = removeMapElements(tmpKey)
+  removeDataPointRendering(point)
+  modalDialog.style.display = `none`
+}
+
 // eslint-disable-next-line no-unused-vars
 function saveButtonHandler(event) {
   if (brandName.value === undefined) return
@@ -190,11 +264,15 @@ function stringifyCoordinates(x, y) {
 }
 
 function renderBrandName() {
-  const newBrand = document.createElement(`li`)
   const dataPoints = Array.from(brands.values()) // Make it easy to get last dP.
   const dataPoint = dataPoints.pop() // gets the last dataPoint added.
-  newBrand.setAttribute(`class`, `brand`)
-  newBrand.setAttribute(`id`, `brand${dataPoint.order}`)
-  newBrand.textContent = dataPoint.brand
-  brandList.appendChild(newBrand)
+  const li = document.createElement(`li`)
+  li.appendChild(document.createTextNode(dataPoint.brand))
+  const button = document.createElement(`button`)
+  button.innerHTML = `Delete`
+  button.onclick = handleDeleteButton
+  li.appendChild(button)
+  li.setAttribute(`class`, `brand`)
+  li.setAttribute(`id`, brandIdStr(dataPoint.order))
+  brandList.appendChild(li)
 }
