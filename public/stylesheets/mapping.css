@@ -81,6 +81,32 @@ header {
   background: radial-gradient(circle at 50%, #fefefe 0%, #cbeeff 100%);
     touch-action: none;
 }
+#exdata, #exnotes {
+  color: black;
+  display: block;
+  margin: 0.5em 0;
+  padding: 0 0;
+}
+p#exnotes {
+  word-wrap: break-word;
+  width: 100%
+  white-space: normal;
+}
+#exname {
+  font-size: 1.3em;
+}
+.exbrand {
+  margin-bottom: .5em;
+}
+#brand-list {
+  display: block;
+}
+h5 {
+  font-size: 1em;
+}
+#metext {
+  font-size: 0.5em;
+}
 
 
 /* @media (max-aspect-ratio: 1/1) { */
@@ -236,25 +262,4 @@ div {
 #page-prompt {
   margin: 1em 4em;
   text-align: left;
-}
-#exdata, #exnotes {
-  color: black;
-  margin-top: 0;
-  padding-top: 0;
-}
-#exname {
-  font-size: 1.3em;
-}
-.exbrand {
-  margin-bottom: .5em;
-}
-#exnotes {
-  display: block;
-}
-h5 {
-  font-size: 1em;
-}
-#metext {
-  font-size: 0.5em;
-  text-color: red;
 }
