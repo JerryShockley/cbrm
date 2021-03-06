@@ -28,6 +28,8 @@ const saveButton = modalDialog.getElementsByClassName(`save`)[0]
 const brandName = document.getElementById(`brand-name-input`)
 // HTML node used to access the dialog brand notes input.
 const brandNotes = document.getElementById(`brand-notes`)
+const timerStartButton = document.getElementById(`start-button`)
+const timerPauseButton = document.getElementById(`pause-button`)
 const timerText = document.getElementsByClassName(`elapsed-time-text`)[0]
 const pausedDialog = document.getElementById(`paused-modal`)
 // Map of dataPoint values with a stringifyed svg coordinates key.
