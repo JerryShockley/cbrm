@@ -17,7 +17,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           defaultValue: 0,
         },
-        duration: {
+        durationSum: {
           type: Sequelize.INTEGER,
           defaultValue: 0,
         },

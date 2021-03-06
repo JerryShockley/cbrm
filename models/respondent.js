@@ -15,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     getDurationString() {
-      return formatDuration(this.duration)
+      return formatDuration(this.durationSum)
+      // return `my time`
     }
 
     /**
@@ -41,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         defaultValue: 0,
       },
-      duration: {
+      durationSum: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
       },
