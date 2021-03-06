@@ -16,7 +16,7 @@ exports.mappingCreate = async (req, res) => {
     {
       projectId: 1,
       respondentId: nextRespondentId(),
-      duration: db.Respondent.sumMappingDurations(points),
+      durationSum: db.Respondent.sumMappingDurations(points),
       pointCount: db.Respondent.getMappingsCount(points),
       mappings: points,
     },
@@ -46,6 +46,6 @@ exports.mappingShow = async (req, res) => {
       })
     })
     .catch((err) => {
-      console.error(`Failed to find Respondent: ${error}`)
+      console.error(`Failed to find Respondent: ${err}`)
     })
 }
