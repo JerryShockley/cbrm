@@ -85,13 +85,13 @@ function onListening() {
 // Use gratefull shutdown with PM2, Forever, etc.
 async function gracefulShutdown(signal) {
   console.log(`Received '${signal}'...Shutting down.`)
-  await db.sequelize.close().then(() => {
-    console.log(`DB server shutdown successfully`)
-  })
-  await server.close(async () => {
+  await server.close(() => {
     console.log(`NodeJS server is shutdown successfully.`)
-    process.exit(0)
   })
+  results = await db.sequelize.close()
+  console.log(JSON.stringify(results, null, 2))
+  console.log(`DB server shutdown successfully`)
+  process.exit(0)
 }
 
 process.on(`SIGINT`, () => {
