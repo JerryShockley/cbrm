@@ -35,6 +35,6 @@ block content
       ol#brand-list
         each ptb in points
           li(class='brand' id=`brand${ptb.order}`)
-            p.exbrand(id=`exname`)= ptb.brand
-            p.exbrand(id=`exdata`)= ptb.getExtendedBrandString()
-            p.exbrand(id=`exnotes`)= ptb.notes
+            p.exbrand.exname= ptb.brand
+            p.exbrand.exdata= ptb.getExtendedBrandString()
+            p.exbrand.exnotes= ptb.notes
