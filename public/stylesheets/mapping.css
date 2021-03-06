@@ -94,9 +94,11 @@ p#exnotes {
 }
 #exname {
   font-size: 1.3em;
+  padding-right: 3em;
 }
-.exbrand {
+.del-brand-button {
   margin-bottom: .5em;
+  margin-left: 2em;
 }
 #brand-list {
   display: block;
@@ -107,7 +109,12 @@ h5 {
 #metext {
   font-size: 0.5em;
 }
-
+#start-button {
+  display: block;
+}
+#pause-button {
+  display: block;
+}
 
 /* @media (max-aspect-ratio: 1/1) { */
 /*   #mysvg { */
@@ -197,6 +204,17 @@ h5 {
  #brand12 {
    color: var(--color12);
  }
+ #paused-modal {
+  display: block; /* Hidden by default */
+  position: fixed;
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+ }
  #brand-modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -218,7 +236,11 @@ h5 {
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
  }
- /* The Close Button */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .close {
   color: #aaa;
   float: right;
@@ -232,7 +254,6 @@ close:hover,
   cursor: pointer;
 }
 #notes {
-  /* rows: 4; */
   rows: 4;
   columns: 40;
 }
