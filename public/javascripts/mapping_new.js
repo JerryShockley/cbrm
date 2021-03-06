@@ -28,6 +28,8 @@ const saveButton = modalDialog.getElementsByClassName(`save`)[0]
 const brandName = document.getElementById(`brand-name-input`)
 // HTML node used to access the dialog brand notes input.
 const brandNotes = document.getElementById(`brand-notes`)
+const timerText = document.getElementsByClassName(`elapsed-time-text`)[0]
+const pausedDialog = document.getElementById(`paused-modal`)
 // Map of dataPoint values with a stringifyed svg coordinates key.
 // Note the points map and the brands map contain the same values.
 const points = new Map()
@@ -48,9 +50,12 @@ svg.addEventListener(`pointerdown`, addDataPointHandler)
 saveButton.addEventListener(`click`, saveButtonHandler, false)
 cancelButton.addEventListener(`click`, cancelButtonHandler, false)
 submitButton.addEventListener(`click`, submitButtonHandler, false)
+timerStartButton.addEventListener(`click`, timerStartButtonHandler, false)
+timerPauseButton.addEventListener(`click`, timerPauseButtonHandler, false)
 
 function submitButtonHandler(event) {
   if (brands.size === 0) return
+  stopStopwatch()
   const dbPoints = []
   brands.forEach((point, key) => {
     dbPoints.push(filterDbMappingObject(point))
@@ -59,18 +64,22 @@ function submitButtonHandler(event) {
 }
 
 function sendDbPoints(dbPoints) {
-  axios.post(`/mappings/create`, { points: dbPoints }).then(
-    (response) => {
-      const cport = window.location.port
-      const cportStr = cport ? `:${cport}` : ``
-      console.log(`port = ${cport}`)
-      const showUrl = `${window.location.protocol}//${window.location.hostname}${cportStr}${response.data.location}`
-      window.location.assign(showUrl)
-    },
-    (error) => {
-      alert(`Failed: ${error}`)
-    }
-  )
+  axios
+    .post(`/mappings/create`, {
+      points: dbPoints,
+    })
+    .then(
+      (response) => {
+        const cport = window.location.port
+        const cportStr = cport ? `:${cport}` : ``
+        console.log(`port = ${cport}`)
+        const showUrl = `${window.location.protocol}//${window.location.hostname}${cportStr}${response.data.location}`
+        window.location.assign(showUrl)
+      },
+      (error) => {
+        alert(`Failed: ${error}`)
+      }
+    )
 }
 
 // Used to determine the coordinates' distance from the center.
@@ -101,7 +110,6 @@ function filterDbMappingObject(point) {
 }
 
 function addDataPointHandler(event) {
-  if (pointCount === maxPointCount) return
   const dataPoint = createdataPointObject(event)
   if (!isValidCoordinate(dataPoint.svgX, dataPoint.svgY)) return
   pointCount += 1 // position dependent check carefully before moving.
@@ -121,7 +129,7 @@ function createdataPointObject(event) {
     brand: tmpKey,
     notes: ``,
     order: pointCount + 1,
-    duration: 0,
+    duration: pointSeconds,
     // dom screen coordinates
     screenX: event.clientX,
     screenY: event.clientY,
@@ -201,7 +209,8 @@ function adjustDataPointIds(startIdx) {
 
 function removeDataPointRendering(point) {
   const domBrand = document.querySelector(brandIdStr(point.order, true))
-  domBrand.parentNode.removeChild(domBrand)
+  // partial points won't have a brand yet.
+  if (domBrand != null) domBrand.parentNode.removeChild(domBrand)
   const domPoint = document.querySelector(pointIdStr(point.order, true))
   domPoint.parentNode.removeChild(domPoint)
 }
@@ -247,6 +256,8 @@ function saveButtonHandler(event) {
   completePartialMapEntry(input)
   modalDialog.style.display = `none`
   renderBrandName(brands.get(input.brand))
+  // resetPointStartTime()
+  pointSeconds = 0
 }
 
 function completePartialMapEntry(userInput) {
@@ -267,12 +278,70 @@ function renderBrandName() {
   const dataPoints = Array.from(brands.values()) // Make it easy to get last dP.
   const dataPoint = dataPoints.pop() // gets the last dataPoint added.
   const li = document.createElement(`li`)
-  li.appendChild(document.createTextNode(dataPoint.brand))
+  li.innerHTML = dataPoint.brand
   const button = document.createElement(`button`)
+  button.setAttribute(`class`, `del-brand-button`)
   button.innerHTML = `Delete`
   button.onclick = handleDeleteButton
   li.appendChild(button)
-  li.setAttribute(`class`, `brand`)
+  li.setAttribute(`class`, `brand-li`)
   li.setAttribute(`id`, brandIdStr(dataPoint.order))
   brandList.appendChild(li)
+}
+
+// ****************   Timer   ************************
+let prePauseIntRef
+// Never needs reseting.
+let surveySeconds = 0
+// Reset by saveButtonHandler and consumed by AddDataPointHandler
+let pointSeconds = 0
+
+function timerStartButtonHandler(event) {
+  hidePausedDialog()
+  startStopwatch()
+}
+
+function timerPauseButtonHandler(event) {
+  stopStopwatch()
+  showPausedDialog()
+}
+
+/** Starts the stopwatch */
+function startStopwatch() {
+  // Set start time based on whether it's stopped or resetted
+  startTime = surveySeconds // setStartTime(prePauseTime)
+  // Every second
+  prePauseIntRef = setInterval(() => {
+    pointSeconds += 1
+    surveySeconds += 1
+    timerText.innerText = formatDuration(surveySeconds)
+  }, 1000)
+}
+
+function formatDuration(seconds) {
+  const elapsed = new Date(null)
+  elapsed.setTime(seconds * 1000)
+  const str = elapsed.toISOString().substr(11, 8)
+  return str.startsWith(`00:`) ? str.slice(3) : str
+}
+
+/** Pauses stopwatch */
+function stopStopwatch() {
+  // Clear interval
+  if (typeof prePauseIntRef !== `undefined`) {
+    clearInterval(prePauseIntRef)
+    prePauseIntRef = undefined
+  }
+}
+
+function showPausedDialog() {
+  changeDisplay(pausedDialog, `block`)
+}
+
+function hidePausedDialog() {
+  changeDisplay(pausedDialog, `none`)
+}
+
+function changeDisplay(element, value) {
+  element.style.display = value
 }
