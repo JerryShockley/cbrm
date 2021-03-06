@@ -52,6 +52,7 @@ header {
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   min-width: 200px;
+  overflow: hidden;
 }
 .brands {
   display: block;
@@ -75,36 +76,46 @@ header {
 #mysvg {
   display: block;
   width: auto;
-  margin-right: 2em;
   height: 100%;
   margin: 0;
   background: radial-gradient(circle at 50%, #fefefe 0%, #cbeeff 100%);
     touch-action: none;
 }
-#exdata, #exnotes {
+.exdata, .exnotes {
   color: black;
   display: block;
-  margin: 0.5em 0;
+  margin: 0.2em 0;
   padding: 0 0;
+  font-size: 1.2em;
 }
-p#exnotes {
+.exnotes {
   word-wrap: break-word;
   width: 100%
   white-space: normal;
 }
-#exname {
+.exname {
   font-size: 1.3em;
-  padding-right: 3em;
+  margin: 0, 0;
+  padding-bottom: 0;
+}
+.exbrand {
+  margin-bottom: .4em;
 }
 .del-brand-button {
-  margin-bottom: .5em;
+  margin-bottom: .3em;
   margin-left: 2em;
 }
 #brand-list {
   display: block;
+  margin-left: 0;
+  padding-left: 1.4em;
+}
+.brands>h4 {
+  font-size: 1.5em;
+  margin-bottom: 0.2em;
 }
 h5 {
-  font-size: 1em;
+  font-size: 1.4em;
 }
 #metext {
   font-size: 0.5em;
