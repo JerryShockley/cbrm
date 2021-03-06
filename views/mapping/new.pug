@@ -12,6 +12,9 @@ block content
     main.main
       include includes/mapping_svg.pug
     .brands
+      #timer
+        p.elapsed-time-text 00:00
+        button#pause-button Pause Timer
       include includes/mapping_brandnames.pug
       ol#brand-list
     #buttons
@@ -28,5 +31,21 @@ block content
       br
       button.cancel Cancel
       button.save Save
+  #paused-modal
+    .modal-content
+      .center
+        h1= title
+      p#page-prompt= myprompt
+      p#timer-msg.
+        You may take as long as you like to complete the next portion of this
+        survey. We are using a timer to track how long you take to complete the
+        survey and ask that
+        should you need to pause or step away before completing the next section
+        that you press the Pause Timer Button underneath the clock on the right
+        side of your sceen. When you're ready to continue, just press the Start
+        Timer button at the bottom the the dialog box on your screen.
+      .center
+        button#start-button.button.center Start Timer
+
   script(src="/javascripts/mapping_new.js")
   script(src="https://unpkg.com/axios/dist/axios.min.js")
