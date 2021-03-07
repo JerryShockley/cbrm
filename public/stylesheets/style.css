@@ -1,3 +1,9 @@
+:root {
+  --button-red: hsl(0, 69%, 44%);
+  --button-red-hover: hsl(0, 87%, 55%);
+  --button-green: hsl(137, 44%, 38%);
+  --button-green-hover: hsl(137, 49%, 48%);
+}
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -6,27 +12,45 @@ body {
 a {
   color: #00B7FF;
 }
- #buttons button + button {
-   margin-left: 1.5em;
- }
+.buttons + .buttons {
+  margin-left: 2em;
+}
+.flex {
+  display: flex;
+  margin-top: 0;
+}
+.flex-inline {
+  flex-basis: 8em;
+}
+.flex > * + * {
+  margin-top: 0;
+  margin-left: 2em;
+}
  .button {
    display: block;
-   width: 12%;
+   width: 10em;
    text-align: center;
    text-decoration: none;
    padding: 0.8em 1em;
    border-radius: 0.5em;
  }
-.button {
-  background-color: Crimson;
-  border-radius: 5px;
+.button.green {
   color: white;
-  padding: .5em;
-  text-decoration: none;
+  background-color: var(--button-green);
 }
 
-.button:focus,
-.button:hover {
-  background-color: FireBrick;
+.button.green:focus,
+.button.green:hover {
+  background-color: var(--button-green-hover);
+  color: White;
+}
+.button.red {
+  color: white;
+  background-color: var(--button-red);
+}
+
+.button.red:focus,
+.button.red:hover {
+  background-color: var(--button-red-hover);
   color: White;
 }
