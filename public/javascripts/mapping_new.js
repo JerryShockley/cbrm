@@ -243,6 +243,8 @@ function removeMapElements(brandKey) {
 function cancelButtonHandler(event) {
   const point = removeMapElements(tmpKey)
   removeDataPointRendering(point)
+  brandName.value = ``
+  brandNotes.value = ``
   modalDialog.style.display = `none`
 }
 
