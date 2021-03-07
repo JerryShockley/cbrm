@@ -21,14 +21,12 @@ block content
       button.button.green#submit Submit
   #brand-modal.modal-dialog
     .modal-content
-      label(for='brand-name') Brand Name:
-      input#brand-name-input(type='text' name='brand-name' placeholder='The name of the Brand you are mapping.')
-      br
-      br
-      label(for='brand-notes') Notes:
-      input#brand-notes(type='textarea' name='brand-notes' rows='4' cols='40' placeholder='Additional thoughts on this mapping.')
-      br
-      br
+      .input-pair
+        label(for='brand-name') Brand Name:
+        input.input#brand-name-input(type='text' name='brand-name' placeholder='The name of the Brand you are mapping.')
+      .input-pair
+        label(for='brand-notes') Notes:
+        textarea.input#brand-notes(name='brand-notes' rows='4' placeholder='Additional thoughts on this mapping.')
       .flex
         button.flex-inline.button.red.cancel Cancel
         button.flex-inline.button.green.save Save
