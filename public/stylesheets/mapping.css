@@ -51,14 +51,14 @@ header {
   display: block
   grid-column: 1 / 2;
   grid-row: 2 / 3;
-  min-width: 200px;
-  overflow: hidden;
+  min-height: 0;
 }
 .brands {
   display: block;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
   font-size: 0.8em;
+  min-width: 16em;
 }
 .brands li {
   padding-left: 0;
@@ -72,7 +72,6 @@ header {
   grid-column: 1 / 3;
   grid-row: 3 / 4;
 }
-
 #mysvg {
   display: block;
   width: auto;
@@ -80,6 +79,17 @@ header {
   margin: 0;
   background: radial-gradient(circle at 50%, #fefefe 0%, #cbeeff 100%);
     touch-action: none;
+}
+#duration-text {
+  font-size: 1.5em;
+  background-color: grey;
+  color: white;
+  padding: 0.5em 0.5em;
+  width: 8em;
+  text-align: center;
+}
+#paused-modal {
+  display: block;
 }
 .exdata, .exnotes {
   color: black;
@@ -127,12 +137,12 @@ h5 {
   display: block;
 }
 
-/* @media (max-aspect-ratio: 1/1) { */
-/*   #mysvg { */
-/*     width: auto; */
-/*     height: auto; */
-/*   } */
-/* } */
+@media (max-aspect-ratio: 1/1) {
+  #mysvg {
+    width: auto;
+    height: auto;
+  }
+}
 
  #buttons {
    /* display: flex; */
@@ -215,18 +225,7 @@ h5 {
  #brand12 {
    color: var(--color12);
  }
- #paused-modal {
-  display: block; /* Hidden by default */
-  position: fixed;
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
- }
- #brand-modal {
+ .modal-dialog {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -291,7 +290,7 @@ div {
   background-color: #f2f2f2;
   padding: 20px;
 }
-#page-prompt {
+#page-prompt, #timer-msg {
   margin: 1em 4em;
   text-align: left;
 }
