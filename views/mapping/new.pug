@@ -13,13 +13,13 @@ block content
       include includes/mapping_svg.pug
     .brands
       #timer
-        p.elapsed-time-text 00:00
-        button#pause-button Pause Timer
+        p#duration-text 00:00
+        button#pause-button.button.red Pause Timer
       include includes/mapping_brandnames.pug
       ol#brand-list
     #buttons
       button#submit Submit
-  #brand-modal
+  #brand-modal.modal-dialog
     .modal-content
       label(for='brand-name') Brand Name:
       input#brand-name-input(type='text' name='brand-name' placeholder='The name of the Brand you are mapping.')
@@ -29,9 +29,10 @@ block content
       input#brand-notes(type='textarea' name='brand-notes' rows='4' cols='40' placeholder='Additional thoughts on this mapping.')
       br
       br
-      button.cancel Cancel
-      button.save Save
-  #paused-modal
+      .flex
+        button.flex-inline.button.red.cancel Cancel
+        button.flex-inline.button.green.save Save
+  #paused-modal.modal-dialog
     .modal-content
       .center
         h1= title
@@ -45,7 +46,7 @@ block content
         side of your sceen. When you're ready to continue, just press the Start
         Timer button at the bottom the the dialog box on your screen.
       .center
-        button#start-button.button.center Start Timer
+        button#start-button.button.green.center Start Timer
 
   script(src="/javascripts/mapping_new.js")
   script(src="https://unpkg.com/axios/dist/axios.min.js")
