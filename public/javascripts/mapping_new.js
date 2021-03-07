@@ -30,7 +30,7 @@ const brandName = document.getElementById(`brand-name-input`)
 const brandNotes = document.getElementById(`brand-notes`)
 const timerStartButton = document.getElementById(`start-button`)
 const timerPauseButton = document.getElementById(`pause-button`)
-const timerText = document.getElementsByClassName(`elapsed-time-text`)[0]
+const timerText = document.getElementById(`duration-text`)
 const pausedDialog = document.getElementById(`paused-modal`)
 // Map of dataPoint values with a stringifyed svg coordinates key.
 // Note the points map and the brands map contain the same values.
