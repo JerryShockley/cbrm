@@ -9,7 +9,7 @@ exports.mappingNew = (req, res) => {
   })
 }
 
-exports.mappingCreate = async (req, res) => {
+exports.mappingCreate = (req, res) => {
   console.log(JSON.stringify(req.body, null, 2))
   const { points } = req.body
   db.Respondent.create(
@@ -34,7 +34,7 @@ exports.mappingCreate = async (req, res) => {
     })
 }
 
-exports.mappingShow = async (req, res) => {
+exports.mappingShow = (req, res) => {
   // respondent = Respondent.build
   const { id } = req.params
   db.Respondent.findByPk(id, { include: `mappings` })
