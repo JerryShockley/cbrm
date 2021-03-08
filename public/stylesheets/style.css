@@ -3,6 +3,7 @@
   --button-red-hover: hsl(0, 87%, 55%);
   --button-green: hsl(137, 44%, 38%);
   --button-green-hover: hsl(137, 49%, 48%);
+  --panel-grey: #f2f2f2;
 }
 body {
   padding: 50px;
