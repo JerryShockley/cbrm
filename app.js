@@ -8,6 +8,7 @@ const indexRouter = require(`./routes/index`)
 const projectsRouter = require(`./routes/projects`)
 const respondentsRouter = require(`./routes/respondents`)
 const mappingsRouter = require(`./routes/mappings`)
+const adminRouter = require(`./routes/admin`)
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.use(`/`, indexRouter)
 app.use(`/projects`, projectsRouter)
 app.use(`/respondents`, respondentsRouter)
 app.use(`/mappings`, mappingsRouter)
+app.use(`/admin`, adminRouter)
 
 // Set static html file path
 app.use(express.static(`public`))
