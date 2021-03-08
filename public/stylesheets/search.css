@@ -1,0 +1,13 @@
+.panel {
+  background-color: var(--panel-grey);
+  padding: 1em 2em 3em 2em;
+}
+header {
+  text-align: center;
+}
+main {
+  margin-left: 2em;
+}
+#search-respondent-id-button {
+  margin: 2em .5em;
+}
