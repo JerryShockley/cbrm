@@ -1,0 +1,17 @@
+extends ../layout.pug
+
+block links
+  link(rel='stylesheet' href='/stylesheets/style.css')
+  link(rel='stylesheet' href='/stylesheets/search.css')
+
+block content
+  .container
+    .panel.center
+      header
+        h1= title
+      main
+        form(action="/admin/search/respondent/create" method="post")
+          .input-pair
+            label(for='respondentId') Respondent ID:
+            input.input#search-respondent-id-button(type='text' name='respondentId' placeholder='Enter respondent ID #')
+          input.button.green(value='Search', type='submit')
