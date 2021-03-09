@@ -10,8 +10,9 @@ module.exports = {
       env: {
         NODE_ENV: "development",
       },
-      env_prod: {
+      env_production: {
         NODE_ENV: "production",
+        "PORT": 80,
       },
     },
   ],
