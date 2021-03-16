@@ -28,7 +28,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      respondentId: {
+      respondent_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {

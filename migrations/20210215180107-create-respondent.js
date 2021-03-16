@@ -21,7 +21,7 @@ module.exports = {
           type: Sequelize.INTEGER,
           defaultValue: 0,
         },
-        projectId: {
+        project_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {

@@ -17,6 +17,18 @@ module.exports = {
           allowNull: false,
           unique: true,
         },
+        initialPrompt: {
+          type: Sequelize.STRING(1024),
+          allowNull: false,
+        },
+        mapPrompt: {
+          type: Sequelize.STRING(1024),
+          allowNull: false,
+        },
+        finalPrompt: {
+          type: Sequelize.STRING(1024),
+          allowNull: false,
+        },
         createdAt: {
           allowNull: false,
           type: Sequelize.DATE,

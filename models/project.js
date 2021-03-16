@@ -2,6 +2,7 @@
 const { Model } = require(`sequelize`)
 module.exports = (sequelize, DataTypes) => {
   class Project extends Model {
+
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Project.hasMany(models.Respondent, {
         as: `respondents`,
-        foreignKey: `projectId`,
+        foreignKey: `project_id`,
       })
     }
   }
@@ -24,6 +25,18 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      initialPrompt: {
+        type: DataTypes.STRING(1024),
+        allowNull: false,
+      },
+      mapPrompt: {
+        type: DataTypes.STRING(1024),
+        allowNull: false,
+      },
+      finalPrompt: {
+        type: DataTypes.STRING(1024),
         allowNull: false,
       },
     },

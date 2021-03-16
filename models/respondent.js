@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Respondent.hasMany(models.Mapping, {
         as: `mappings`,
-        foreignKey: `respondentId`,
+        foreignKey: `respondent_id`,
       })
     }
   }
@@ -45,6 +45,14 @@ module.exports = (sequelize, DataTypes) => {
       durationSum: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+      },
+      project_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: `projects`,
+          key: `id`,
+        },
       },
     },
     {
