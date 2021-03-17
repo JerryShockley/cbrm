@@ -1,0 +1,39 @@
+extends ../layout.pug
+
+block content
+  header
+    h1.center= title
+    p#page-prompt= myprompt
+  main.main
+    form.form-new-project(action="/projects/update/" + project.id method="POST")
+      .panel
+        .input-pair
+          label(for='name') Name:
+          input.input#name-input(type='text' name='name'
+            placeholder='The project name' value=project.name)
+        .input-pair
+          label(for='initialPrompt') Initial Prompt:
+          textarea.input#initial-prompt-input(type='text'
+            name='initialPrompt' rows='12'
+            placeholder='The initial prompt shown to a respondent').
+            #{project.initialPrompt}
+        .input-pair
+          label(for='mapPrompt') Mapping Prompt:
+          textarea.input#initial-prompt-input(type='text' name='mapPrompt'
+            rows='12'
+            placeholder='The mapping prompt for the mapping page.').
+            #{project.mapPrompt}
+        .input-pair
+          label(for='finalPrompt') Final Prompt:
+          textarea.input#map-prompt-input(type='text' name='finalPrompt' rows='12'
+            placeholder='The post mapping page prompt').
+            #{project.finalPrompt}
+        .flex.top-margin
+          button.button.red(type="button"
+            onclick=`adminUrl()`) Admin
+          button.button.green(type='submit') Submit
+
+  script.
+    function adminUrl() {
+      window.location.assign(`${window.location.origin}/admin`)
+    }

@@ -1,0 +1,39 @@
+extends ../layout.pug
+
+block content
+  header.center
+    h1= title
+  main.main.top-margin
+    .show-pair
+      p.label Name:
+      p.data= project.name
+    .show-pair
+      p.label Initial Prompt:
+      p.data= project.initialPrompt
+    .show-pair
+      p.label Mapping Prompt:
+      p.data= project.mapPrompt
+    .show-pair
+      p.label Final Prompt:
+      p.data= project.finalPrompt
+    .show-pair
+      p.label Created At:
+      p.data= project.createdAt
+    .show-pair
+      p.label Updated At:
+      p.data= project.updatedAt
+    .flex.top-margin
+      button.button.red(type=`button` onclick=`adminUrl()`) Admin
+      button.button.green(type=`button` onclick=`editProjectUrl()`) Edit
+
+    input.hidden#project-id(type='text' value=project.id)
+
+  script.
+    function adminUrl() {
+      window.location.assign(`${window.location.origin}/admin`)
+    }
+
+    function editProjectUrl() {
+      const projId = document.getElementById(`project-id`).value
+      window.location.assign(`${window.location.origin}/projects/edit/${projId}`)
+    }
