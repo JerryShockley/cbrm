@@ -5,7 +5,12 @@ html
     block links
       link(rel='stylesheet', href=`/stylesheets/style.css`)
   body
-    block content
+    .container
+      if errmsg
+        .error-block
+          p#error-msg= errmsg
+      .panel
+        block content
 
   footer
     h5 Contact
