@@ -28,10 +28,6 @@ const saveButton = modalDialog.getElementsByClassName(`save`)[0]
 const brandName = document.getElementById(`brand-name-input`)
 // HTML node used to access the dialog brand notes input.
 const brandNotes = document.getElementById(`brand-notes`)
-const timerStartButton = document.getElementById(`start-button`)
-const timerPauseButton = document.getElementById(`pause-button`)
-const timerText = document.getElementById(`duration-text`)
-const pausedDialog = document.getElementById(`paused-modal`)
 // Map of dataPoint values with a stringifyed svg coordinates key.
 // Note the points map and the brands map contain the same values.
 const points = new Map()
@@ -52,12 +48,13 @@ svg.addEventListener(`pointerdown`, addDataPointHandler)
 saveButton.addEventListener(`click`, saveButtonHandler, false)
 cancelButton.addEventListener(`click`, cancelButtonHandler, false)
 submitButton.addEventListener(`click`, submitButtonHandler, false)
-timerStartButton.addEventListener(`click`, timerStartButtonHandler, false)
-timerPauseButton.addEventListener(`click`, timerPauseButtonHandler, false)
+
+// Start the timer.
+startStopwatch()
+
 
 function submitButtonHandler(event) {
   if (brands.size === 0) return
-  stopStopwatch()
   const dbPoints = []
   brands.forEach((point, key) => {
     dbPoints.push(filterDbMappingObject(point))
@@ -69,6 +66,7 @@ function sendDbPoints(dbPoints) {
   axios
     .post(`/mappings/create`, {
       points: dbPoints,
+      project_id: document.getElementById(`project-id`).value,
     })
     .then(
       (response) => {
@@ -300,25 +298,13 @@ let surveySeconds = 0
 // Reset by saveButtonHandler and consumed by AddDataPointHandler
 let pointSeconds = 0
 
-function timerStartButtonHandler(event) {
-  hidePausedDialog()
-  startStopwatch()
-}
-
-function timerPauseButtonHandler(event) {
-  stopStopwatch()
-  showPausedDialog()
-}
-
 /** Starts the stopwatch */
 function startStopwatch() {
   // Set start time based on whether it's stopped or resetted
-  startTime = surveySeconds // setStartTime(prePauseTime)
   // Every second
-  prePauseIntRef = setInterval(() => {
+  setInterval(() => {
     pointSeconds += 1
     surveySeconds += 1
-    timerText.innerText = formatDuration(surveySeconds)
   }, 1000)
 }
 
@@ -327,25 +313,4 @@ function formatDuration(seconds) {
   elapsed.setTime(seconds * 1000)
   const str = elapsed.toISOString().substr(11, 8)
   return str.startsWith(`00:`) ? str.slice(3) : str
-}
-
-/** Pauses stopwatch */
-function stopStopwatch() {
-  // Clear interval
-  if (typeof prePauseIntRef !== `undefined`) {
-    clearInterval(prePauseIntRef)
-    prePauseIntRef = undefined
-  }
-}
-
-function showPausedDialog() {
-  changeDisplay(pausedDialog, `block`)
-}
-
-function hidePausedDialog() {
-  changeDisplay(pausedDialog, `none`)
-}
-
-function changeDisplay(element, value) {
-  element.style.display = value
 }
