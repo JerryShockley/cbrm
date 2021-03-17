@@ -1,0 +1,19 @@
+extends ../layout.pug
+
+block links
+  link(rel='stylesheet' href='/stylesheets/style.css')
+
+block content
+  header.center
+    h1= title
+  main.main
+    h2 Admin Operations
+    ul.tasks(style=`list-style-type:none;`)
+      li.task
+        a(href='admin/projects/list') Project List / Respondent List
+      li.task
+        a(href='admin/search/project/new') Project Search / Edit
+      li.task
+        a(href='admin/search/respondent/new') Respondent Search
+      li.task
+        a(href='projects/new') Create Project
