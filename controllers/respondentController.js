@@ -1,20 +1,26 @@
 const db = require(`../models/index`)
-const Mapping = require(`../models/mapping`)
 const { nextRespondentId } = require(`../lib/idFactory`)
 
-exports.mappingNew = (req, res) => {
-  res.render(`mapping/new`, {
-    title: `New Relationship Mapping`,
-    myprompt: `A very good prompt that tells you what to do!`,
-  })
+exports.respondentNew = async(req, res) => {
+  const { id: project_id } = req.params
+  try {
+    project = await db.Project.findByPk(project_id, { attributes: [`mapPrompt`] })
+    res.render(`respondent/new`, {
+      title: `New Relationship Mapping`,
+      myprompt: project.mapPrompt,
+      project_id: project_id
+    })
+  } catch(err) {
+      console.error(`failed to lookup new respondent prompt: ${err.message}`)
+  }
 }
 
-exports.mappingCreate = (req, res) => {
+exports.respondentCreate = (req, res) => {
   console.log(JSON.stringify(req.body, null, 2))
-  const { points } = req.body
+  const { points, project_id } = req.body
   db.Respondent.create(
     {
-      projectId: 1,
+      project_id: project_id,
       respondentId: nextRespondentId(),
       durationSum: db.Respondent.sumMappingDurations(points),
       pointCount: db.Respondent.getMappingsCount(points),
@@ -26,7 +32,7 @@ exports.mappingCreate = (req, res) => {
   )
     .then((respondent) => {
       console.log(`finished create`)
-      res.json({ location: `/mappings/${respondent.id}` })
+      res.json({ location: `/finish/${respondent.id}` })
     })
     .catch((err) => {
       console.error(`failed to create respondent: ${err.message}`)
@@ -34,15 +40,16 @@ exports.mappingCreate = (req, res) => {
     })
 }
 
-exports.mappingShow = (req, res) => {
+exports.respondentShow = (req, res) => {
   // respondent = Respondent.build
   const { id } = req.params
   db.Respondent.findByPk(id, { include: `mappings` })
     .then((respondent) => {
-      res.render(`mapping/show`, {
+      res.render(`respondent/show`, {
         points: respondent.mappings,
         duration: respondent.getDurationString(),
         title: `Relationship Mapping for Respondent #${respondent.respondentId}`,
+        respondent_id: respondent_id,
       })
     })
     .catch((err) => {
