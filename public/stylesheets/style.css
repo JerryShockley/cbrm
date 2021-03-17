@@ -9,11 +9,18 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-
+.container {
+  padding: 0 3em 0 3em;
+  margin: auto;
+  width: 98%;
+}
 a {
   color: #00B7FF;
 }
-.buttons + .buttons {
+.buttons {
+  margin-top: 0;
+}
+.button + .button {
   margin-left: 2em;
 }
 .flex {
@@ -54,4 +61,74 @@ a {
 .button.red:hover {
   background-color: var(--button-red-hover);
   color: White;
+}
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ .panel {
+  border-radius: 5px;
+  background-color: var(--panel-grey);
+  border: 1px solid #888;
+  margin: auto auto;
+  padding: 1em 2em 3em 2em;
+  width: 90%; /* Could be more or less, depending on screen size */
+ }
+.input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.input-pair {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+  padding-top: 0;
+}
+.show-pair {
+  margin-top: 0;
+  margin-bottom: 1.5em;
+  padding-top: 0;
+}
+.show-pair>p.label {
+  font-weight: bold;
+  margin-bottom: 0;
+}
+.show-pair>p.data {
+  border: 1px solid #9e9d9d;
+  padding: 0.6em 0.8em;
+  margin-top: 0.5em;
+  background-color: #fbf9f9;
+}
+.top-margin {
+  margin-top: 3.5em;
+}
+.tasks {
+  display: block;
+  padding: 1em 0.8em;
+}
+.task {
+  padding: 0.6em 0em;
+
+}
+.task > a{
+  font-size: 1.3rem;
+  color: #071dad;
+}
+.error-block {
+  width: 90%;
+  margin: 0.4em auto;
+  border-radius: 5px;
+  border: 1px solid #888;
+  background-color: var(--button-red);
+  color: white;
+  font-size: 1.2em;
+  padding: 1em 1.5em;
+}
+.hidden {
+  display: none
 }
