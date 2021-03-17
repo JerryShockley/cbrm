@@ -1,9 +1,12 @@
 const express = require(`express`)
 const router = express.Router()
+const controller = require(`../controllers/respondentController`)
 
-/* GET users listing. */
-router.get(`/`, (req, res, next) => {
-  res.send(`respond with a resource`)
-})
+// Post date from new respondent
+router.post(`/create`, controller.respondentCreate)
+// Create new respondent
+router.get(`/new/:id`, controller.respondentNew)
+// Show respondent
+router.get(`/:id`, controller.respondentShow)
 
 module.exports = router

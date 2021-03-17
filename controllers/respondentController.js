@@ -46,10 +46,11 @@ exports.respondentShow = (req, res) => {
   db.Respondent.findByPk(id, { include: `mappings` })
     .then((respondent) => {
       res.render(`respondent/show`, {
+        createDate: respondent.createdAt.toDateString(),
         points: respondent.mappings,
         duration: respondent.getDurationString(),
         title: `Relationship Mapping for Respondent #${respondent.respondentId}`,
-        respondent_id: respondent_id,
+        respondent_id: id,
       })
     })
     .catch((err) => {

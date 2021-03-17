@@ -1,0 +1,35 @@
+extends ../layout.pug
+
+block links
+  link(rel='stylesheet' href='/stylesheets/style.css')
+  link(rel='stylesheet' href='/stylesheets/mapping.css')
+
+block content
+  .grid
+    header
+      h1= title
+      p#page-prompt= myprompt
+    main.main
+      include includes/mapping_svg.pug
+    .brands
+      include includes/mapping_brandnames.pug
+      ol#brand-list
+    #buttons.flex.buttons.top-margin
+      button.button.green#submit Submit
+    #brand-modal.modal-dialog
+      .modal-content
+        .input-pair
+          label(for='brand-name') Brand Name:
+          input.input#brand-name-input(type='text' name='brand-name'
+            placeholder='The name of the Brand you are mapping.')
+        .input-pair
+          label(for='brand-notes') Notes:
+          textarea.input#brand-notes(name='brand-notes' rows='4'
+            placeholder='Additional thoughts on this mapping.')
+        .flex.buttons.top-margin
+          button.button.red.cancel Cancel
+          button.button.green.save Save
+        input.hidden#project-id(type='text' name='project-id' value=project_id)
+
+  script(src="/javascripts/mapping_new.js")
+  script(src="https://unpkg.com/axios/dist/axios.min.js")
