@@ -21,11 +21,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, `public`)))
 
-app.use(`/`, indexRouter)
 app.use(`/projects`, projectsRouter)
 app.use(`/respondents`, respondentsRouter)
 app.use(`/mappings`, mappingsRouter)
 app.use(`/admin`, adminRouter)
+app.use(`/`, indexRouter)
 
 // Set static html file path
 app.use(express.static(`public`))
