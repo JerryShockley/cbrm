@@ -52,7 +52,6 @@ submitButton.addEventListener(`click`, submitButtonHandler, false)
 // Start the timer.
 startStopwatch()
 
-
 function submitButtonHandler(event) {
   if (brands.size === 0) return
   const dbPoints = []
@@ -64,7 +63,7 @@ function submitButtonHandler(event) {
 
 function sendDbPoints(dbPoints) {
   axios
-    .post(`/mappings/create`, {
+    .post(`/respondents/create`, {
       points: dbPoints,
       project_id: document.getElementById(`project-id`).value,
     })
