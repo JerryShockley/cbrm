@@ -28,7 +28,9 @@ const saveButton = modalDialog.getElementsByClassName(`save`)[0]
 const brandName = document.getElementById(`brand-name-input`)
 // HTML node used to access the dialog brand notes input.
 const brandNotes = document.getElementById(`brand-notes`)
-// Map of dataPoint values with a stringifyed svg coordinates key.
+const timerStartButton = document.getElementById(`start-button`)
+const pausedDialog = document.getElementById(`paused-modal`)
+// Map of dataPoint values with a stringifyed svg coordinates key
 // Note the points map and the brands map contain the same values.
 const points = new Map()
 // Map of dataPoint values with the brand name as the key.
@@ -48,9 +50,7 @@ svg.addEventListener(`pointerdown`, addDataPointHandler)
 saveButton.addEventListener(`click`, saveButtonHandler, false)
 cancelButton.addEventListener(`click`, cancelButtonHandler, false)
 submitButton.addEventListener(`click`, submitButtonHandler, false)
-
-// Start the timer.
-startStopwatch()
+timerStartButton.addEventListener(`click`, timerStartButtonHandler, false)
 
 function submitButtonHandler(event) {
   if (brands.size === 0) return
@@ -294,8 +294,12 @@ function renderBrandName() {
 let prePauseIntRef
 // Never needs reseting.
 let surveySeconds = 0
-// Reset by saveButtonHandler and consumed by AddDataPointHandler
 let pointSeconds = 0
+
+function timerStartButtonHandler(event) {
+  hidePausedDialog()
+  startStopwatch()
+}
 
 /** Starts the stopwatch */
 function startStopwatch() {
@@ -305,6 +309,18 @@ function startStopwatch() {
     pointSeconds += 1
     surveySeconds += 1
   }, 1000)
+}
+
+function showPausedDialog() {
+  changeDisplay(pausedDialog, `block`)
+}
+
+function hidePausedDialog() {
+  changeDisplay(pausedDialog, `none`)
+}
+
+function changeDisplay(element, value) {
+  element.style.display = value
 }
 
 function formatDuration(seconds) {
