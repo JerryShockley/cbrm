@@ -1,17 +1,19 @@
 const db = require(`../models/index`)
 const { nextRespondentId } = require(`../lib/idFactory`)
 
-exports.respondentNew = async(req, res) => {
+exports.respondentNew = async (req, res) => {
   const { id: project_id } = req.params
   try {
-    project = await db.Project.findByPk(project_id, { attributes: [`mapPrompt`] })
+    project = await db.Project.findByPk(project_id, {
+      attributes: [`mapPrompt`],
+    })
     res.render(`respondent/new`, {
       title: `New Relationship Mapping`,
       myprompt: project.mapPrompt,
-      project_id: project_id
+      project_id: project_id,
     })
-  } catch(err) {
-      console.error(`failed to lookup new respondent prompt: ${err.message}`)
+  } catch (err) {
+    console.error(`failed to lookup new respondent prompt: ${err.message}`)
   }
 }
 
@@ -20,7 +22,7 @@ exports.respondentCreate = (req, res) => {
   const { points, project_id } = req.body
   db.Respondent.create(
     {
-      project_id: project_id,
+      project_id,
       respondentId: nextRespondentId(),
       durationSum: db.Respondent.sumMappingDurations(points),
       pointCount: db.Respondent.getMappingsCount(points),
@@ -50,7 +52,7 @@ exports.respondentShow = (req, res) => {
         points: respondent.mappings,
         duration: respondent.getDurationString(),
         title: `Relationship Mapping for Respondent #${respondent.respondentId}`,
-        respondent_id: id,
+        respondent_id: respondent.id,
       })
     })
     .catch((err) => {
