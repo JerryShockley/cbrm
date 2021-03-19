@@ -30,6 +30,13 @@ block content
           button.button.red.cancel Cancel
           button.button.green.save Save
         input.hidden#project-id(type='text' name='project-id' value=project_id)
+    #paused-modal.modal-dialog
+        .modal-content
+          .center
+            h1= title
+          p#page-prompt= myprompt
+          .center
+            button#start-button.button.center Start
 
   script(src="/javascripts/mapping_new.js")
   script(src="https://unpkg.com/axios/dist/axios.min.js")
