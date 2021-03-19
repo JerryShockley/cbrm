@@ -24,7 +24,7 @@
     "prefer-template":"warn",
     "arrow-body-style": ["error", "always"],
     "no-console": "off",
-    "camel-case": "off",
+    "camelcase": "off",
     "no-plusplus": "off",
     "no-restricted-syntax": "off"
   }
