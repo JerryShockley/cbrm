@@ -22,6 +22,10 @@
     "comma-dangle": "off",
     "import/no-dynamic-require": "off",
     "prefer-template":"warn",
-    "arrow-body-style": ["error", "always"]
+    "arrow-body-style": ["error", "always"],
+    "no-console": "off",
+    "camel-case": "off",
+    "no-plusplus": "off",
+    "no-restricted-syntax": "off",
   }
 }
