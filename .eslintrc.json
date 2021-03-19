@@ -26,6 +26,6 @@
     "no-console": "off",
     "camel-case": "off",
     "no-plusplus": "off",
-    "no-restricted-syntax": "off",
+    "no-restricted-syntax": "off"
   }
 }
