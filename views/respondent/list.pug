@@ -1,0 +1,33 @@
+extends ./../list_layout.pug
+
+block content
+  header.center
+    h1= title
+  main.main.top-margin
+    table#respondent-table.display.nowrap
+      thead
+        tr
+          th Respondent ID
+          th Point Count
+          th Duration Sum
+          th Project ID
+          th Created
+          th Mappings Count
+      tfoot
+        tr
+          th Respondent ID
+          th Point Count
+          th Duration Sum
+          th Project ID
+          th Created
+          th Mappings Count
+
+    .flex.top-margin
+      button.button.red(type=`button` onclick=`adminUrl()`) Admin
+
+  include ../includes/scripts.pug
+  script(src=`/javascripts/respondent_list.js`)
+  script.
+    function adminUrl() {
+      window.location.assign(`${window.location.origin}/admin/3355`)
+    }

@@ -1,0 +1,35 @@
+extends ../list_layout.pug
+
+block content
+  header.center
+    h1= title
+  main.main.top-margin
+    table#mapping-table.display.nowrap
+      thead
+        tr
+          th Brand
+          th Order
+          th X
+          th Y
+          th Duration
+          th Respondent ID
+          th Created
+      tfoot
+        tr
+          th Brand
+          th Order
+          th X
+          th Y
+          th Duration
+          th Respondent ID
+          th Created
+
+    .flex.top-margin
+      button.button.red(type=`button` onclick=`adminUrl()`) Admin
+
+  include ../includes/scripts.pug
+  script(src=`/javascripts/mapping_list.js`)
+  script.
+    function adminUrl() {
+      window.location.assign(`${window.location.origin}/admin/3355`)
+    }
