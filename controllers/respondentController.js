@@ -1,6 +1,42 @@
 const db = require(`../models/index`)
 const { nextRespondentId } = require(`../lib/idFactory`)
 
+exports.respondentList = (req, res) => {
+  res.render(`respondent/list`, {
+    title: `Showing all Respondents`,
+  })
+}
+
+exports.respondentListData = (req, res) => {
+  db.Respondent.findAll({
+    attributes: {
+      exclude: [`id`, `updatedAt`],
+      include: [
+        [
+          db.Sequelize.fn(`COUNT`, db.Sequelize.col(`respondent_id`)),
+          `MappingsCount`,
+        ],
+      ],
+    },
+    include: [
+      {
+        model: db.Mapping,
+        as: `mappings`,
+        attributes: [],
+      },
+    ],
+    group: [`Respondent.id`],
+  })
+    .then((respondents) => {
+      console.log(JSON.stringify(respondents[0], null, 2))
+      res.json({ data: respondents })
+    })
+    .catch((err) => {
+      console.error(`Failed to find all respondents: ${err.message}`)
+      return next(err)
+    })
+}
+
 exports.respondentNew = async (req, res) => {
   const { id: project_id } = req.params
   try {
@@ -10,7 +46,7 @@ exports.respondentNew = async (req, res) => {
     res.render(`respondent/new`, {
       title: `New Relationship Mapping`,
       myprompt: project.mapPrompt,
-      project_id: project_id,
+      project_id,
     })
   } catch (err) {
     console.error(`failed to lookup new respondent prompt: ${err.message}`)
