@@ -23,7 +23,7 @@ block content
       p.label Updated At:
       p.data= project.updatedAt
     .flex.top-margin
-      button.button.red(type=`button` onclick=`adminUrl()`) Admin
+      button.button.red(type=`button` onclick=`adminUrl()`) Close
       button.button.green(type=`button` onclick=`editProjectUrl()`) Edit
 
     input.hidden#project-id(type='text' value=project.id)
