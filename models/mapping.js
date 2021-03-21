@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Mapping.belongsTo(models.Respondent, {
+        as: `respondent`,
+        foreignKey: `respondent_id`,
+      })
     }
   }
 
