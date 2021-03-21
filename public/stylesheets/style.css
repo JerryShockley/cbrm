@@ -132,3 +132,15 @@ a {
 .hidden {
   display: none
 }
+.txtleft {
+  text-align: left;
+}
+.txtright {
+  text-align: right;
+}
+.txtcenter {
+  text-align: center;
+}
+.text-wrap {
+  white-space: normal;
+}
