@@ -4,26 +4,26 @@ block content
   header.center
     h1= title
   main.main.top-margin
-    table#respondent-table.display.nowrap
+    table#respondent-table.display.wrap(style=`width:100%`)
       thead
         tr
           th Respondent ID
           th Point Count
           th Duration Sum
           th Project ID
-          th Created
           th Mappings Count
+          th Created
       tfoot
         tr
           th Respondent ID
           th Point Count
           th Duration Sum
           th Project ID
-          th Created
           th Mappings Count
+          th Created
 
     .flex.top-margin
-      button.button.red(type=`button` onclick=`adminUrl()`) Admin
+      button.button.red(type=`button` onclick=`adminUrl()`) Close
 
   include ../includes/scripts.pug
   script(src=`/javascripts/respondent_list.js`)
