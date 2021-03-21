@@ -7,10 +7,10 @@ exports.respondentList = (req, res) => {
   })
 }
 
-exports.respondentListData = (req, res) => {
+exports.respondentListData = (req, res, next) => {
   db.Respondent.findAll({
     attributes: {
-      exclude: [`id`, `updatedAt`],
+      exclude: [`id`, `updatedAt`, `project_id`],
       include: [
         [
           db.Sequelize.fn(`COUNT`, db.Sequelize.col(`respondent_id`)),
@@ -24,8 +24,13 @@ exports.respondentListData = (req, res) => {
         as: `mappings`,
         attributes: [],
       },
+      {
+        model: db.Project,
+        attributes: [`projectId`],
+        as: `project`,
+      },
     ],
-    group: [`Respondent.id`],
+    group: [`Respondent.id`, `project.id`],
   })
     .then((respondents) => {
       console.log(JSON.stringify(respondents[0], null, 2))
