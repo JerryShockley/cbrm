@@ -1,12 +1,12 @@
 $(`#project-table`).DataTable({
   ajax: `/projects/listdata`,
   dom: `Bfrtip`,
-  buttons: [`copy`, `csv`, `excel`, `pdf`, `print`],
+  buttons: [`copy`, `csv`, `excel`, `pdf`, `print`, `pageLength`],
   columns: [
-    { data: `projectId` },
+    { data: `projectId`, className: `txtright` },
     { data: `name` },
     { data: `createdAt` },
     { data: `updatedAt` },
-    { data: `respondentCount` },
+    { data: `respondentCount`, className: `txtright` },
   ],
 })
