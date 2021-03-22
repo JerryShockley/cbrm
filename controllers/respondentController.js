@@ -11,19 +11,8 @@ exports.respondentListData = (req, res, next) => {
   db.Respondent.findAll({
     attributes: {
       exclude: [`id`, `updatedAt`, `project_id`],
-      include: [
-        [
-          db.Sequelize.fn(`COUNT`, db.Sequelize.col(`respondent_id`)),
-          `MappingsCount`,
-        ],
-      ],
     },
     include: [
-      {
-        model: db.Mapping,
-        as: `mappings`,
-        attributes: [],
-      },
       {
         model: db.Project,
         attributes: [`projectId`],
