@@ -241,7 +241,7 @@ function cancelButtonHandler(event) {
   const point = removeMapElements(tmpKey)
   removeDataPointRendering(point)
   brandName.value = ``
-  brandNotes.value = ``
+  // brandNotes.value = ``
   modalDialog.style.display = `none`
 }
 
@@ -250,14 +250,13 @@ function saveButtonHandler(event) {
   if (brandName.value === undefined) return
   input = {
     brand: brandName.value,
-    notes: brandNotes.value || ``,
+    // notes: brandNotes.value || ``,
   }
   brandName.value = ``
-  brandNotes.value = ``
+  // brandNotes.value = ``
   completePartialMapEntry(input)
   modalDialog.style.display = `none`
   renderBrandName(brands.get(input.brand))
-  // resetPointStartTime()
   pointSeconds = 0
 }
 
