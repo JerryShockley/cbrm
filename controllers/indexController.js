@@ -37,7 +37,7 @@ exports.startSurvey = async (req, res) => {
     console.log(JSON.stringify(project, null, 2))
     res.render(`survey_intro`, {
       title: `Survey #${projectId} Introduction`,
-      relUrl: `respondents/new/${project.id}`,
+      relUrl: `/respondents/new/${project.id}`,
       prompt: project.initialPrompt,
     })
   } catch (err) {
