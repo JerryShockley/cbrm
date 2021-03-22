@@ -22,11 +22,7 @@ block content
           label(for='brand-name') Brand Name:
           input.input#brand-name-input(type='text' name='brand-name'
             placeholder='The name of the Brand you are mapping.')
-        .input-pair
-          label(for='brand-notes') Notes:
-          textarea.input#brand-notes(name='brand-notes' rows='4'
-            placeholder='Additional thoughts on this mapping.')
-        .flex.buttons.top-margin
+        .flex.buttons
           button.button.red.cancel Cancel
           button.button.green.save Save
         input.hidden#project-id(type='text' name='project-id' value=project_id)

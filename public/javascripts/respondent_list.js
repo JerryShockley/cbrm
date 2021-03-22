@@ -8,7 +8,6 @@ $(`#respondent-table`).DataTable({
     { data: `pointCount`, className: `txtright` },
     { data: `durationSum`, className: `txtright` },
     { data: `project.projectId`, className: `txtright` },
-    { data: `MappingsCount`, className: `txtright` },
     { data: `createdAt` },
   ],
 })
