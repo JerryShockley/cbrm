@@ -7,6 +7,7 @@ const config = require(`${__dirname}/../config/config`)[env]
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     sequelize = new Sequelize(config)
+    /* eslint-disable global-require */
     const Respondent = require(`../models/respondent`)(
       sequelize,
       Sequelize.DataTypes
@@ -42,12 +43,6 @@ module.exports = {
       return obj
     }
 
-    async function asyncForEach(array, callback) {
-      for (let idx = 0; idx < array.length; idx++) {
-        await callback(array[idx], idx, array)
-      }
-    }
-
     const generateRepondentMappings = async (respondent, idxs) => {
       const respondentMappings = []
       for (const idx of idxs) {
@@ -55,19 +50,41 @@ module.exports = {
         respondentMappings.push(newMapping)
         mappings.push(newMapping)
       }
-      return await Promise.all(respondentMappings)
+      return Promise.all(respondentMappings)
     }
 
-    const updateRespondentRecord = async (respondent, respondentMappings) => {
-      console.log(`Updating respondent record ${respondent.id}`)
-      respondent.set(`pointCount`, respondentMappings.length)
-      const duration = Respondent.sumMappingDurations(respondentMappings)
-      respondent.set(`durationSum`, duration)
-      console.log(
-        `pointCount = ${respondent.pointCount}     duration = ${respondent.durationSum}`
-      )
-      console.log(JSON.stringify(respondent, null, 2))
-      respondent.save()
+    // const updateRespondentRecord = async (respondent, respondentMappings) => {
+    //   console.log(`Updating respondent record ${respondent.id}`)
+    //   respondent.set(`pointCount`, respondentMappings.length)
+    //   const duration = Respondent.sumMappingDurations(respondentMappings)
+    //   respondent.set(`durationSum`, duration)
+    //   console.log(
+    //     `pointCount = ${respondent.pointCount}     duration = ${respondent.durationSum}`
+    //   )
+    //   console.log(JSON.stringify(respondent, null, 2))
+    //   await sequelize.query(
+    //     `UPDATE respondents SET "durationSum" = ?, pointCount = ?`,
+    //     {
+    //       replacements: [String(duration), String(respondentMappings.length)],
+    //       type: Sequelize.QueryTypes.UPDATE,
+    //     }
+    //   )
+    //   // await respondent.save()
+    // }
+
+    const updateRespondentRecords = async () => {
+      const respondents = await Respondent.findAll({
+        include: [`mappings`],
+      })
+      /* eslint-disable guard-for-in */
+      for (respondent in respondents) {
+        respondent.pointCount = respondent.mappings.length
+        const duration = Respondent.sumMappingDurations(respondent.mappings)
+        respondent.durationSum = duration
+        console.log(JSON.stringify(respondent, null, 2))
+        /* eslint-disable no-await-in-loop */
+        await respondent.save()
+      }
     }
 
     const processRespondents = async () => {
@@ -78,7 +95,7 @@ module.exports = {
           respondent,
           idxs
         )
-        await updateRespondentRecord(respondent, respondentMappings)
+        // await updateRespondentRecord(respondent, respondentMappings)
       })
     }
 
@@ -86,6 +103,7 @@ module.exports = {
       await processRespondents()
       console.log(`Generated ${mappings.length} mappings.`)
       await queryInterface.bulkInsert(`mappings`, mappings, {})
+      await updateRespondentRecords()
     }
 
     generateData()
