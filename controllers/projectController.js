@@ -10,7 +10,7 @@ exports.projectList = (req, res) => {
 exports.projectListData = (req, res) => {
   db.Project.findAll({
     attributes: {
-      exclude: [`id`, `initialPrompt`, `mapPrompt`, `finalPrompt`],
+      exclude: [`id`, `initialPrompt`, `mapPrompt`, `finalPrompt`, `videoLink`],
       include: [
         [
           db.Sequelize.fn(`COUNT`, db.Sequelize.col(`project_id`)),
@@ -74,7 +74,7 @@ exports.projectEdit = (req, res) => {
     .then((project) => {
       res.render(`project/edit`, {
         title: `Editing Project #${project.projectId}`,
-        project: project,
+        project,
       })
     })
     .catch((err) => {
@@ -87,10 +87,11 @@ exports.projectEdit = (req, res) => {
 
 exports.projectCreate = (req, res) => {
   console.log(JSON.stringify(req.body, null, 2))
-  const { name, initialPrompt, mapPrompt, finalPrompt } = req.body
+  const { name, initialPrompt, mapPrompt, finalPrompt, videoLink } = req.body
   db.Project.create({
     projectId: nextProjectId(),
     name,
+    videoLink,
     initialPrompt,
     mapPrompt,
     finalPrompt,
@@ -105,12 +106,14 @@ exports.projectCreate = (req, res) => {
     })
 }
 
+/* eslint-disable consistent-return */
 exports.projectUpdate = async (req, res) => {
   const { id } = req.params
-  const { name, initialPrompt, mapPrompt, finalPrompt } = req.body
+  const { name, initialPrompt, mapPrompt, finalPrompt, videoLink } = req.body
   try {
     project = await db.Project.findByPk(id)
     project.name = name
+    project.videoLink = videoLink
     project.initialPrompt = initialPrompt
     project.mapPrompt = mapPrompt
     project.finalPrompt = finalPrompt

@@ -31,7 +31,7 @@ exports.startSurvey = async (req, res) => {
   console.log(`Entering start_survey: project #${projectId}`)
   try {
     project = await db.Project.findOne({
-      attributes: [`id`, `initialPrompt`],
+      attributes: [`id`, `initialPrompt`, `videoLink`],
       where: { projectId },
     })
     console.log(JSON.stringify(project, null, 2))
@@ -39,6 +39,7 @@ exports.startSurvey = async (req, res) => {
       title: `Survey #${projectId} Introduction`,
       relUrl: `/respondents/new/${project.id}`,
       prompt: project.initialPrompt,
+      videoLink: project.videoLink,
     })
   } catch (err) {
     res.render(`index`, {

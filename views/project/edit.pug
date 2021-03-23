@@ -12,6 +12,12 @@ block content
           input.input#name-input(type='text' name='name'
             placeholder='The project name' value=project.name)
         .input-pair
+          label(for='videoLink') YouTube Video Link:
+          textarea.input#video-link-input(type='text'
+            name='videoLink' rows='4'
+            placeholder='The YouTube video link. On YouTube click the Shared button followed by the Embed button and then copy and paste here.').
+            #{project.videoLink}
+        .input-pair
           label(for='initialPrompt') Initial Prompt:
           textarea.input#initial-prompt-input(type='text'
             name='initialPrompt' rows='12'

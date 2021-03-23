@@ -17,6 +17,10 @@ module.exports = {
           allowNull: false,
           unique: true,
         },
+        videoLink: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
         initialPrompt: {
           type: Sequelize.STRING(1024),
           allowNull: false,
