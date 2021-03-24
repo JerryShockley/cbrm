@@ -25,12 +25,12 @@
   "dependencies": {
     "axios": "^0.21.1",
     "express": "^4.17.1",
+    "lorem-ipsum": "^2.0.3",
     "morgan": "^1.10.0",
     "npm-force-resolutions": "^0.0.6",
     "pg": "^8.5.1",
     "pug": ">=3.0.2",
-    "sequelize": "^6.5.0",
-    "lorem-ipsum": "^2.0.3"
+    "sequelize": "^6.5.0"
   },
   "resolutions": {
     "node-forge": "0.10.0"

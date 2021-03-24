@@ -203,6 +203,7 @@ function adjustDataPointIds(startIdx) {
     pt.order -= 1
     replaceDomElementId(brandIdStr(pt.order + 1), brandIdStr(pt.order))
     replaceDomElementId(pointIdStr(pt.order + 1), pointIdStr(pt.order))
+    replaceDomElementId(labelIdStr(pt.order + 1), labelIdStr(pt.order))
   })
 }
 
@@ -212,11 +213,19 @@ function removeDataPointRendering(point) {
   if (domBrand != null) domBrand.parentNode.removeChild(domBrand)
   const domPoint = document.querySelector(pointIdStr(point.order, true))
   domPoint.parentNode.removeChild(domPoint)
+  const domLabel = document.querySelector(labelIdStr(point.order, true))
+  domLabel.parentNode.removeChild(domLabel)
+
 }
 
 function brandIdStr(idx, prependHashChar = false) {
   hchar = prependHashChar ? `#` : ``
   return `${hchar}brand${idx}`
+}
+
+function labelIdStr(idx, prependHashChar = false) {
+  hchar = prependHashChar ? `#` : ``
+  return `${hchar}label${idx}`
 }
 
 function pointIdStr(idx, prependHashChar = false) {
@@ -267,6 +276,20 @@ function completePartialMapEntry(userInput) {
   brands.delete(tmpKey) // Must do this before adding new due to size limit.
   brands.set(partialDataPoint.brand, partialDataPoint)
   points.set(stringifyCoordinates(partialDataPoint.svgX, partialDataPoint.svgY))
+
+  const newLabel = document.createElementNS(NS, `text`)
+  newLabel.setAttributeNS(null, "x", partialDataPoint.cartesianX + 3)
+  newLabel.setAttributeNS(null, "y", -partialDataPoint.cartesianY + (5 * Math.sign(partialDataPoint.cartesianY)))
+  newLabel.setAttributeNS(null, "font-size","5px")
+  if (Math.sign(partialDataPoint.cartesianX) == -1) {
+      newLabel.setAttributeNS(null, "x", partialDataPoint.cartesianX + 3)
+  } else {
+      newLabel.setAttributeNS(null, "x", partialDataPoint.cartesianX - ((26 * partialDataPoint.brand.substring(0,10).length/10)))
+  }
+  var textNode = document.createTextNode(partialDataPoint.brand.substring(0,10));
+  newLabel.appendChild(textNode);
+  newLabel.setAttribute(`id`, labelIdStr(partialDataPoint.order))
+  svg.appendChild(newLabel)
 }
 
 // Creates a Map key for the points Map by stringifying the SVG coordinates.
