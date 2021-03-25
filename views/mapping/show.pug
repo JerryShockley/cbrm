@@ -1,23 +1,22 @@
 extends ../layout.pug
 
 block links
-  link(rel='stylesheet' href='/stylesheets/style.css')
   link(rel='stylesheet' href='/stylesheets/mapping.css')
+  link(rel='stylesheet' href='/stylesheets/style.css')
 
 block content
-  .grid
+  .container
     header
       h1= title
-
-      p= createDate
+      p#page-prompt= prompt
     main.main
       svg#mysvg(xmlns='http://www.w3.org/2000/svg' viewBox='-101 -101 202 202'
       preserveAspectRatio=preserveAspectRatio='xMidYMid meet' width='100%')
-        circle.ocircle(cx='0' cy='0' r='100' stroke='#ff4d4d' stroke-width='0.3' fill='none')
         circle(cx='0' cy='0' r='.1' stroke='black' fill='black')
         circle(cx='0' cy='0' r='25' stroke='#ff4d4d' stroke-width='0.3' fill='none')
         circle(cx='0' cy='0' r='50' stroke='#ff4d4d' stroke-width='0.3' fill='none')
         circle(cx='0' cy='0' r='75' stroke='#ff4d4d' stroke-width='0.3' fill='none')
+        circle(cx='0' cy='0' r='100' stroke='#ff4d4d' stroke-width='0.3' fill='none')
         line(x1='-100' y1='0' x2='100' y2='0' stroke='#cccccc' stroke-width='0.3')
         line(x1='0' y1='100' x2='0' y2='-100' stroke='#cccccc' stroke-width='0.3')
         circle(cx='0' cy='0' r='7' stroke='black' fill='none' stroke-width='.2' )
@@ -27,7 +26,6 @@ block content
             text(id=`pt${pt.order}` x=(pt.cartesianX + 3) y=(-pt.cartesianY + (5 * Math.sign(pt.cartesianY))) font-size='5px') #{pt.brand.substring(0,10)}
           else
             text(id=`pt${pt.order}` x=(pt.cartesianX + ((26 * pt.brand.substring(0,10).length/10) * -Math.sign(pt.cartesianX))) y=(-pt.cartesianY + (5 * Math.sign(pt.cartesianY))) font-size='5px') #{pt.brand.substring(0,10)}
-          circle(
           class='point'
           id=`pt${pt.order}`
           cx= String(pt.cartesianX)
@@ -42,18 +40,4 @@ block content
           li(class='brand' id=`brand${ptb.order}`)
             p.exbrand.exname= ptb.brand
             p.exbrand.exdata= ptb.getExtendedBrandString()
-    .flex.top-margin
-      button.button.red(type=`button` onclick=`adminUrl()`) Close
-      button.button.green(type=`button`
-        onclick=`respondentSearchUrl()`) New Search
-
-    input.hidden#respondent-id(type='text' value=respondent_id)
-
-  script.
-    function adminUrl() {
-      window.location.assign(`${window.location.origin}/admin`)
-    }
-
-    function respondentSearchUrl() {
-      window.location.assign(`${window.location.origin}/admin/search/respondent/new`)
-    }
+            p.exbrand.exnotes= ptb.notes
