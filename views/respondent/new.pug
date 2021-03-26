@@ -24,14 +24,14 @@ block content
             placeholder='The name of the Brand you are mapping.')
         .flex.buttons
           button.button.red.cancel Cancel
-          button.button.green.save Save
+          button.button.disabled.save Save
         input.hidden#project-id(type='text' name='project-id' value=project_id)
     #paused-modal.modal-dialog
         .modal-content
           .center
             h1= title
           p#page-prompt= myprompt
-          .center
+          .buttons.center
             button#start-button.button.green.center Start
 
   script(src="/javascripts/mapping_new.js")
