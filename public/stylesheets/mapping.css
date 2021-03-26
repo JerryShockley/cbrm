@@ -6,7 +6,7 @@
   --color4: BlueViolet;
   --color5: LimeGreen;
   --color6: Teal;
-  --color7: Cyan;
+  --color7: #2c2521;
   --color8: DodgerBlue;
   --color9: SandyBrown;
   --color10: SaddleBrown;
@@ -32,8 +32,8 @@ body {
   font-family: Lato, helvetica, sans-serif;
   font-size: 100%;
   padding: 0 0;
-  margin: 0;
-  width: 96vw;
+  margin: auto;
+  width: 100%;
   height: 100vh;
   color: #333;
   overflow: scroll;
@@ -161,80 +161,43 @@ h5 {
    background-color: green;
    color: white;
  }
- #pt1 {
+ .pt1 {
    fill: var(--color1);
  }
- #pt2 {
+ .pt2 {
    fill: var(--color2);
  }
- #pt3 {
+ .pt3 {
    fill: var(--color3);
  }
- #pt4 {
+ .pt4 {
    fill: var(--color4);
  }
- #pt5 {
+ .pt5 {
    fill: var(--color5);
  }
- #pt6 {
+ .pt6 {
    fill: var(--color6);
  }
- #pt7 {
+ .pt7 {
    fill: var(--color7);
  }
- #pt8 {
+ .pt8 {
    fill: var(--color8);
  }
- #pt9 {
+ .pt9 {
    fill: var(--color9);
  }
- #pt10 {
+ .pt10 {
    fill: var(--color10);
  }
- #pt11 {
+ .pt11 {
    fill: var(--color11);
  }
- #pt12 {
+ .pt12 {
    fill: var(--color12);
  }
 
- #label1 {
-   fill: var(--color1);
- }
- #label2 {
-   fill: var(--color2);
- }
- #label3 {
-   fill: var(--color3);
- }
- #label4 {
-   fill: var(--color4);
- }
- #label5 {
-   fill: var(--color5);
- }
- #label6 {
-   fill: var(--color6);
- }
- #label7 {
-   fill: var(--color7);
- }
- #label8 {
-   fill: var(--color8);
- }
- #label9 {
-   fill: var(--color9);
- }
- #label10 {
-   fill: var(--color10);
- }
- #label11 {
-   fill: var(--color11);
- }
- #label12 {
-   fill: var(--color12);
- }
- 
  #brand1 {
    color: var(--color1);
  }
@@ -294,21 +257,23 @@ h5 {
 #brand-notes {
   margin-bottom: 1em;
 }
-div {
+.brands .main {
   border-radius: 5px;
   background-color: #f2f2f2;
-  padding: 20px;
+}
+.brands {
+  padding: 0.9em 0.9em;
 }
 #page-prompt, #timer-msg {
   margin: 1em 4em;
   text-align: left;
-}
-.panel {
-  border: none;
 }
 #page-prompt {
   margin-top: 4em;
 }
 #paused-modal {
   display: block;
+}
+.point-label-text {
+  font-size: 0.27em;
 }
