@@ -3,22 +3,32 @@
   --button-red-hover: hsl(0, 87%, 55%);
   --button-green: hsl(137, 44%, 38%);
   --button-green-hover: hsl(137, 49%, 48%);
+  --button-disabled-color: hsl(0, 4%, 62%);
   --panel-grey: #f2f2f2;
+  font-size: 0.875em;
 }
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 .container {
-  padding: 0 3em 0 3em;
   margin: auto;
-  width: 98%;
+  width: 100%;
+}
+.pcontainer {
+  padding: 2em 2em 3em 4em;
+}
+.main > p {
+  margin-top: 3em;
+}
+header {
+  margin-bottom: 1.7em;
 }
 a {
   color: #00B7FF;
 }
 .buttons {
-  margin-top: 0;
+  padding-top: 3.5em;
+  padding-bottom: 2em;
 }
 .button + .button {
   margin-left: 2em;
@@ -72,8 +82,7 @@ a {
   background-color: var(--panel-grey);
   border: 1px solid #888;
   margin: auto auto;
-  padding: 1em 2em 3em 2em;
-  width: 90%; /* Could be more or less, depending on screen size */
+  width: 96%; /* Could be more or less, depending on screen size */
  }
 .input {
   width: 100%;
@@ -143,4 +152,8 @@ a {
 }
 .text-wrap {
   white-space: normal;
+}
+.button.disabled {
+  pointer-events: none;
+  background-color: var(--button-disabled-color);
 }
