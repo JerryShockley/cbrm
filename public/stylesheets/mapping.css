@@ -277,3 +277,11 @@ h5 {
 .point-label-text {
   font-size: 0.27em;
 }
+ul.contact > li {
+  padding-left: 0.3em;
+  margin-top: 0.3em;
+  padding-left: 0.3em;
+}
+ul.contact {
+  padding-bottom: 3em;
+}

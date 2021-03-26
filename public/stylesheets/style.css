@@ -157,3 +157,13 @@ a {
   pointer-events: none;
   background-color: var(--button-disabled-color);
 }
+footer > h5 {
+  padding-left: 2em;
+  padding-top: 1em;
+  margin-bottom: 0.8em;
+  font-size: 1.2em;
+}
+ul.contact > li {
+  margin-top: 0.3em;
+  padding-left: 0.3em;
+}
