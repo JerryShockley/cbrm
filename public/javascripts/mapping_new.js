@@ -27,12 +27,9 @@ const saveButton = modalDialog.getElementsByClassName(`save`)[0]
 // HTML node used to access the dialog brand name input.
 const brandName = document.getElementById(`brand-name-input`)
 // HTML node used to access the dialog brand notes input.
-const brandNotes = document.getElementById(`brand-notes`)
+// const brandNotes = document.getElementById(`brand-notes`)
 const timerStartButton = document.getElementById(`start-button`)
 const pausedDialog = document.getElementById(`paused-modal`)
-// Map of dataPoint values with a stringifyed svg coordinates key
-// Note the points map and the brands map contain the same values.
-const points = new Map()
 // Map of dataPoint values with the brand name as the key.
 // Note the points map and the brands map contain the same values.
 const brands = new Map()
@@ -51,6 +48,7 @@ saveButton.addEventListener(`click`, saveButtonHandler, false)
 cancelButton.addEventListener(`click`, cancelButtonHandler, false)
 submitButton.addEventListener(`click`, submitButtonHandler, false)
 timerStartButton.addEventListener(`click`, timerStartButtonHandler, false)
+brandName.addEventListener(`keyup`, brandNameKeyupHandler, false)
 
 function submitButtonHandler(event) {
   if (brands.size === 0) return
@@ -110,7 +108,13 @@ function filterDbMappingObject(point) {
 
 function addDataPointHandler(event) {
   const dataPoint = createdataPointObject(event)
-  if (!isValidCoordinate(dataPoint.svgX, dataPoint.svgY)) return
+  if (
+    !isValidCoordinate(dataPoint.svgX, dataPoint.svgY) ||
+    pointCount === maxPointCount
+  ) {
+    return
+  }
+
   pointCount += 1 // position dependent check carefully before moving.
   brands.set(dataPoint.brand, dataPoint)
   renderDataPoint(dataPoint)
@@ -167,8 +171,8 @@ function renderDataPoint() {
   const dataPoint = brands.get(tmpKey)
   newCircle.setAttribute(`cx`, dataPoint.svgX)
   newCircle.setAttribute(`cy`, dataPoint.svgY)
-  newCircle.setAttribute(`r`, 1)
-  newCircle.setAttribute(`class`, `point`)
+  newCircle.setAttribute(`r`, 1.5)
+  newCircle.setAttribute(`class`, `point pt${dataPoint.order}`)
   newCircle.setAttribute(`id`, pointIdStr(dataPoint.order))
   svg.appendChild(newCircle)
 }
@@ -203,19 +207,38 @@ function adjustDataPointIds(startIdx) {
     pt.order -= 1
     replaceDomElementId(brandIdStr(pt.order + 1), brandIdStr(pt.order))
     replaceDomElementId(pointIdStr(pt.order + 1), pointIdStr(pt.order))
+    replaceElementClass(
+      pointIdStr(pt.order, false),
+      `pt${pt.order + 1}`,
+      `pt${pt.order}`
+    )
     replaceDomElementId(labelIdStr(pt.order + 1), labelIdStr(pt.order))
+    replaceElementClass(
+      labelIdStr(pt.order, false),
+      `pt${pt.order + 1}`,
+      `pt${pt.order}`
+    )
   })
+}
+
+// newClass can be a space delimited string (e.g. "foo bar"). It will
+// replace all classes assigned to the elemeent.
+function replaceElementClass(elementId, oldClass, newClass) {
+  const element = document.getElementById(elementId)
+  element.classList.remove(oldClass)
+  element.classList.add(newClass)
 }
 
 function removeDataPointRendering(point) {
   const domBrand = document.querySelector(brandIdStr(point.order, true))
-  // partial points won't have a brand yet.
-  if (domBrand != null) domBrand.parentNode.removeChild(domBrand)
+  // partial points won't have a brand or pointLabel yet.
+  if (domBrand != null) {
+    domBrand.parentNode.removeChild(domBrand)
+    const domLabel = document.querySelector(labelIdStr(point.order, true))
+    domLabel.parentNode.removeChild(domLabel)
+  }
   const domPoint = document.querySelector(pointIdStr(point.order, true))
   domPoint.parentNode.removeChild(domPoint)
-  const domLabel = document.querySelector(labelIdStr(point.order, true))
-  domLabel.parentNode.removeChild(domLabel)
-
 }
 
 function brandIdStr(idx, prependHashChar = false) {
@@ -238,9 +261,6 @@ function pointIdStr(idx, prependHashChar = false) {
 function removeMapElements(brandKey) {
   const item = brands.get(brandKey)
   // We only need to do this if this is not a partial entry
-  if (brandKey !== tmpKey) {
-    points.delete(stringifyCoordinates(item.svgX, item.svgY))
-  }
   brands.delete(brandKey)
   return item
 }
@@ -256,50 +276,86 @@ function cancelButtonHandler(event) {
 
 // eslint-disable-next-line no-unused-vars
 function saveButtonHandler(event) {
-  if (brandName.value === undefined) return
   input = {
     brand: brandName.value,
     // notes: brandNotes.value || ``,
   }
   brandName.value = ``
+  if (brands.has(input.brand)) {
+    alert(`Error: Duplicate brand name.`)
+    window.setTimeout(() => {
+      document.getElementById(`brand-name-input`).focus()
+    }, 0)
+    return
+  }
   // brandNotes.value = ``
   completePartialMapEntry(input)
   modalDialog.style.display = `none`
-  renderBrandName(brands.get(input.brand))
+  saveButton.classList.remove(`green`)
+  saveButton.classList.add(`disabled`)
+  renderBrandName()
+  renderPointLabel()
   pointSeconds = 0
+}
+
+/* eslint-disable no-unused-expressions */
+function brandNameKeyupHandler(event) {
+  if (brandName.value === ``) {
+    saveButton.classList.remove(`green`)
+    saveButton.classList.add(`disabled`)
+    return
+  }
+  saveButton.classList.remove(`disabled`)
+  saveButton.classList.add(`green`)
 }
 
 function completePartialMapEntry(userInput) {
   partialDataPoint = brands.get(tmpKey)
   partialDataPoint.brand = userInput.brand
-  partialDataPoint.notes = userInput.notes
+  // partialDataPoint.notes = userInput.notes
+
   brands.delete(tmpKey) // Must do this before adding new due to size limit.
   brands.set(partialDataPoint.brand, partialDataPoint)
-  points.set(stringifyCoordinates(partialDataPoint.svgX, partialDataPoint.svgY))
-
-  const newLabel = document.createElementNS(NS, `text`)
-  newLabel.setAttributeNS(null, "x", partialDataPoint.cartesianX + 3)
-  newLabel.setAttributeNS(null, "y", -partialDataPoint.cartesianY + (5 * Math.sign(partialDataPoint.cartesianY)))
-  newLabel.setAttributeNS(null, "font-size","5px")
-  if (Math.sign(partialDataPoint.cartesianX) == -1) {
-      newLabel.setAttributeNS(null, "x", partialDataPoint.cartesianX + 3)
-  } else {
-      newLabel.setAttributeNS(null, "x", partialDataPoint.cartesianX - ((26 * partialDataPoint.brand.substring(0,10).length/10)))
-  }
-  var textNode = document.createTextNode(partialDataPoint.brand.substring(0,10));
-  newLabel.appendChild(textNode);
-  newLabel.setAttribute(`id`, labelIdStr(partialDataPoint.order))
-  svg.appendChild(newLabel)
+  const dataPoints = Array.from(brands.values()) // Make it easy to get last dP.
+  const dataPoint = dataPoints[dataPoints.length - 1] // gets the last dataPoint added.
 }
 
-// Creates a Map key for the points Map by stringifying the SVG coordinates.
-function stringifyCoordinates(x, y) {
-  return `X${x}Y${y}`
+function computePointLabelCoordinates(x, y, labelText) {
+  const posXOffset = Math.floor((19 * labelText.length) / -10)
+  const negXOffset = 2
+  const xOffset = x >= 0 ? posXOffset : 3
+  const yOffset = y >= 0 ? -3 : 5
+  return {
+    x: x + xOffset,
+    y: y + yOffset,
+  }
+}
+
+function renderPointLabel() {
+  const dataPoints = Array.from(brands.values()) // Make it easy to get last dP.
+  const dataPoint = dataPoints[dataPoints.length - 1] // gets the last dataPoint added.
+  const labelString = dataPoint.brand.substring(0, 10)
+  const { x, y } = computePointLabelCoordinates(
+    dataPoint.svgX,
+    dataPoint.svgY,
+    labelString
+  )
+  const labelText = document.createTextNode(labelString)
+  const labelElement = document.createElementNS(
+    `http://www.w3.org/2000/svg`,
+    `text`
+  )
+  labelElement.setAttribute(`x`, x)
+  labelElement.setAttribute(`y`, y)
+  labelElement.appendChild(labelText)
+  labelElement.setAttribute(`class`, `point-label-text pt${dataPoint.order}`)
+  labelElement.setAttribute(`id`, labelIdStr(dataPoint.order))
+  svg.appendChild(labelElement)
 }
 
 function renderBrandName() {
   const dataPoints = Array.from(brands.values()) // Make it easy to get last dP.
-  const dataPoint = dataPoints.pop() // gets the last dataPoint added.
+  const dataPoint = dataPoints[dataPoints.length - 1] // gets the last dataPoint added.
   const li = document.createElement(`li`)
   li.innerHTML = dataPoint.brand
   const button = document.createElement(`button`)
@@ -307,7 +363,7 @@ function renderBrandName() {
   button.innerHTML = `Delete`
   button.onclick = handleDeleteButton
   li.appendChild(button)
-  li.setAttribute(`class`, `brand-li`)
+  li.setAttribute(`class`, `brand-li `)
   li.setAttribute(`id`, brandIdStr(dataPoint.order))
   brandList.appendChild(li)
 }
