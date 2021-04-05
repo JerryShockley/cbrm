@@ -10,7 +10,7 @@ exports.respondentList = (req, res) => {
 exports.respondentListData = (req, res, next) => {
   db.Respondent.findAll({
     attributes: {
-      exclude: [`id`, `updatedAt`, `project_id`],
+      exclude: [`updatedAt`, `project_id`],
     },
     include: [
       {

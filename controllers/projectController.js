@@ -10,7 +10,7 @@ exports.projectList = (req, res) => {
 exports.projectListData = (req, res) => {
   db.Project.findAll({
     attributes: {
-      exclude: [`id`, `initialPrompt`, `mapPrompt`, `finalPrompt`, `videoLink`],
+      exclude: [`initialPrompt`, `mapPrompt`, `finalPrompt`, `videoLink`],
       include: [
         [
           db.Sequelize.fn(`COUNT`, db.Sequelize.col(`project_id`)),
@@ -48,13 +48,6 @@ exports.projectAll = async (req, res) => {
     )
     console.log(JSON.stringify(projects, null, 2))
     console.log(JSON.stringify(respondentCounts, null, 2))
-    /* for (project in projects) { */
-    /*   project[`respondent_count`] = respondentCounts[project.id] */
-    /* } */
-    /*     res.json(`project/list`, { */
-    /*       title: `Showing all Projects`, */
-    /*       projects: projects */
-    /*     }) */
   } catch (err) {
     console.error(`Failed to gather project all data: ${err.message}`)
     return next(err)
@@ -91,7 +84,6 @@ exports.projectCreate = (req, res) => {
   db.Project.create({
     projectId: nextProjectId(),
     name,
-    videoLink,
     initialPrompt,
     mapPrompt,
     finalPrompt,
