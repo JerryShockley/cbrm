@@ -1,6 +1,6 @@
 const { QueryTypes } = require(`sequelize`)
 const { LoremIpsum } = require(`lorem-ipsum`)
-const { getRandomNumber, getRandomIntegerWithSign } = require(`../lib/utils`)
+const { randomNumber, randomCircleCoordinates } = require(`../lib/utils`)
 const env = process.env.NODE_ENV || `development`
 const config = require(`${__dirname}/../config/config`)[env]
 
@@ -30,14 +30,15 @@ module.exports = {
     function createMapping(respondent_id, idx) {
       obj = {}
       obj.respondent_id = respondent_id
-      obj.brand = lorem.generateWords(getRandomNumber(1, 3))
-      if (getRandomNumber(1, 10) < 3) {
-        obj.notes = lorem.generateSentences(getRandomNumber(1, 2))
+      obj.brand = lorem.generateWords(randomNumber(1, 3))
+      if (randomNumber(1, 10) < 3) {
+        obj.notes = lorem.generateSentences(randomNumber(1, 2))
       }
+      const { x, y } = randomCircleCoordinates(100)
       obj.order = idx + 1
-      obj.cartesianX = getRandomIntegerWithSign(0, 100)
-      obj.cartesianY = getRandomIntegerWithSign(0, 100)
-      obj.duration = getRandomNumber(1, 60)
+      obj.cartesianX = x
+      obj.cartesianY = y
+      obj.duration = randomNumber(1, 60)
       obj.createdAt = new Date()
       obj.updatedAt = new Date()
       return obj
@@ -89,7 +90,7 @@ module.exports = {
 
     const processRespondents = async () => {
       respondents.forEach(async (respondent) => {
-        const count = getRandomNumber(3, 10)
+        const count = randomNumber(3, 10)
         const idxs = [...Array(count).keys()]
         const respondentMappings = await generateRepondentMappings(
           respondent,
