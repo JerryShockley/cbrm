@@ -22,17 +22,31 @@ block content
         line(x1='0' y1='100' x2='0' y2='-100' stroke='#cccccc' stroke-width='0.3')
         circle(cx='0' cy='0' r='7' stroke='black' fill='none' stroke-width='.2' )
         text( id='metext' x='0' y='1' dominant-baseline='middle' text-anchor='middle') ME
+        -
+          function computePointLabelCoordinates(x, y, labelText) {
+            const posXOffset = Math.floor((19 * labelText.length) / -10)
+            const negXOffset = 2
+            const xOffset = x >= 0 ? posXOffset : 3
+            const yOffset = y >= 0 ? -6 : 3
+            return {
+              x: x + xOffset,
+              y: y + yOffset,
+            }
+          }
         each pt in points
-          if Math.sign(pt.cartesianX) == -1
-            text(id=`pt${pt.order}` x=(pt.cartesianX + 3) y=(-pt.cartesianY + (5 * Math.sign(pt.cartesianY))) font-size='5px') #{pt.brand.substring(0,10)}
-          else
-            text(id=`pt${pt.order}` x=(pt.cartesianX + ((26 * pt.brand.substring(0,10).length/10) * -Math.sign(pt.cartesianX))) y=(-pt.cartesianY + (5 * Math.sign(pt.cartesianY))) font-size='5px') #{pt.brand.substring(0,10)}
+          -
+            const labelStr = pt.brand.substring(0,10)
+            const { x, y } = computePointLabelCoordinates(pt.cartesianX,
+              pt.cartesianY, labelStr )
+
+          text(class=`point-label-text pt${pt.order}` id=`pt${pt.order}`
+            x=x y=-y)= labelStr
           circle(
-          class='point'
+          class=`point pt${pt.order}`
           id=`pt${pt.order}`
           cx= String(pt.cartesianX)
           cy= String(-pt.cartesianY)
-          r='1'
+          r='1.5'
         )
     .brands
       h5 Total Duration: #{duration}
