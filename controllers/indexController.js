@@ -12,11 +12,12 @@ exports.nextSteps = async (req, res) => {
     attributes: [`respondentId`, `project_id`],
   })
   project = await db.Project.findByPk(respondent.project_id, {
-    attributes: [`finalPrompt`],
+    attributes: [`finalPrompt`, `surveyUrl`],
   })
   try {
     res.render(`finish`, {
       title: `Next steps for respondent #${respondent.respondentId} `,
+      surveyUrl: `${project.surveyUrl}${respondent.respondentId}`,
       prompt: project.finalPrompt,
     })
   } catch (err) {

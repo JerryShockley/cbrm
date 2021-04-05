@@ -33,6 +33,11 @@ block content
         textarea.input#map-prompt-input(type='text' name='finalPrompt' rows='12'
           placeholder='The post mapping page prompt').
           #{project.finalPrompt}
+      .input-pair
+        label(for='surveyUrl') Survey URL:
+        textarea.input#map-prompt-input(type='text' name='surveyUrl' rows='2'
+          placeholder='The survey url ending with the "=" character.').
+          #{project.surveyUrl}
       .flex.top-margin
         button.button.red(type="button"
           onclick=`adminUrl()`) Close

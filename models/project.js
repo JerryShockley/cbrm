@@ -42,6 +42,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(1024),
         allowNull: false,
       },
+      surveyUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       sequelize,

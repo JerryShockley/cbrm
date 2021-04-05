@@ -27,6 +27,10 @@ block content
         label(for='finalPrompt') Final Prompt:
         textarea.input#map-prompt-input(type='text' name='finalPrompt' rows='12'
           placeholder='The post mapping page prompt')
+      .input-pair
+        label(for='surveyUrl') Survey URL:
+        textarea.input#map-prompt-input(type='text' name='surveyUrl' rows='2'
+          placeholder='The survey url ending with the "=" character.')
       .flex.top-margin
         button.button.red(type="button" onclick=`adminUrl()`) Close
         button.button.green(type='submit') Submit
