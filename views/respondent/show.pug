@@ -44,16 +44,10 @@ block content
             p.exbrand.exdata= ptb.getExtendedBrandString()
     .flex.top-margin
       button.button.red(type=`button` onclick=`adminUrl()`) Close
-      button.button.green(type=`button`
-        onclick=`respondentSearchUrl()`) New Search
 
     input.hidden#respondent-id(type='text' value=respondent_id)
 
   script.
     function adminUrl() {
-      window.location.assign(`${window.location.origin}/admin`)
-    }
-
-    function respondentSearchUrl() {
-      window.location.assign(`${window.location.origin}/admin/search/respondent/new`)
+      window.location.assign(`${window.location.origin}/admin/3355`)
     }
