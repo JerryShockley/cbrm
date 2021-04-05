@@ -167,3 +167,9 @@ ul.contact > li {
   margin-top: 0.3em;
   padding-left: 0.3em;
 }
+a.list-link {
+  color: darkblue;
+}
+a.list-link:hover {
+  color: green;
+}
