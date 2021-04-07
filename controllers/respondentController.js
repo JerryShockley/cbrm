@@ -2,9 +2,10 @@ const db = require(`../models/index`)
 const { nextRespondentId } = require(`../lib/idFactory`)
 
 exports.respondentList = (req, res) => {
-  res.render(`respondent/list`, {
-    title: `Showing all Respondents`,
-  })
+  res.send(`Nice try!`)
+  // res.render(`respondent/list`, {
+  //   title: `Showing all Respondents`,
+  // })
 }
 
 exports.respondentListData = (req, res, next) => {

@@ -2,9 +2,10 @@ const db = require(`../models/index`)
 const { nextProjectId } = require(`../lib/idFactory`)
 
 exports.projectList = (req, res) => {
-  res.render(`project/list`, {
-    title: `Showing all Projects`,
-  })
+  res.send(`Nice try! ;-)`)
+  // res.render(`project/list`, {
+  //   title: `Showing all Projects`,
+  // })
 }
 
 exports.projectListData = (req, res) => {

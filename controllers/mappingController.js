@@ -1,9 +1,10 @@
 const db = require(`../models/index`)
 
 exports.mappingList = (req, res) => {
-  res.render(`mapping/list`, {
-    title: `Showing all mappings`,
-  })
+  res.send(`Nice try! ;-)`)
+  // res.render(`mapping/list`, {
+  //   title: `Showing all mappings`,
+  // })
 }
 
 exports.mappingListData = (req, res) => {
