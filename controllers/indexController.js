@@ -18,7 +18,7 @@ exports.nextSteps = async (req, res) => {
     console.log(`Survey URL = ${project.surveyUrl}${respondent.respondentId}`)
     res.render(`finish`, {
       title: `Next steps for respondent #${respondent.respondentId} `,
-      surveyUrl: `${project.surveyUrl}${respondent.respondentId}`,
+      surveyUrl: `${project.surveyUrl.trim()}${respondent.respondentId}`,
       prompt: project.finalPrompt,
     })
   } catch (err) {
@@ -41,7 +41,7 @@ exports.startSurvey = async (req, res) => {
       title: `Survey #${projectId} Introduction`,
       relUrl: `/respondents/new/${project.id}`,
       prompt: project.initialPrompt,
-      videoLink: project.videoLink,
+      videoLink: project.videoLink.trim(),
     })
   } catch (err) {
     res.render(`index`, {
