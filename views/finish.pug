@@ -7,9 +7,4 @@ block content
     p= prompt
 
   .buttons.top-margin
-    a.button.green#start.button(onclick=`assignUrl('${surveyUrl}')`) Continue
-
-  script.
-    function assignUrl(url) {
-      window.location.assign(url)
-    }
+    a.button.green#start-button(href=surveyUrl) Continue
