@@ -15,6 +15,7 @@ exports.nextSteps = async (req, res) => {
     attributes: [`finalPrompt`, `surveyUrl`],
   })
   try {
+    console.log(`Survey URL = ${project.surveyUrl}${respondent.respondentId}`)
     res.render(`finish`, {
       title: `Next steps for respondent #${respondent.respondentId} `,
       surveyUrl: `${project.surveyUrl}${respondent.respondentId}`,
