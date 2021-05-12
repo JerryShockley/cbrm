@@ -61,7 +61,7 @@ function submitButtonHandler(event) {
 
 function sendDbPoints(dbPoints) {
   axios
-    .post(`/respondents/create`, {
+    .post(`/9339/respondents/create`, {
       points: dbPoints,
       project_id: document.getElementById(`project-id`).value,
     })

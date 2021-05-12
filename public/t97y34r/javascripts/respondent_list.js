@@ -4,7 +4,7 @@ const cportStr = cport ? `:${cport}` : ``
 const showUrlRoot = `${window.location.protocol}//${window.location.hostname}${cportStr}`
 
 $(`#respondent-table`).DataTable({
-  ajax: `/respondents/listdata`,
+  ajax: `/9339/respondents/listdata`,
   responsive: true,
   dom: `Bfrtip`,
   buttons: [`copy`, `csv`, `excel`, `pdf`, `print`, `pageLength`],
@@ -14,7 +14,7 @@ $(`#respondent-table`).DataTable({
       className: `txtright text-wrap`,
       render: function (data, type, row, meta) {
         // prettier-ignore
-        const link = "<a class='list-link' href='" + showUrlRoot + "/respondents/" +
+        const link = "<a class='list-link' href='" + showUrlRoot + "/9339/respondents/" +
           row.id + "'>" + data + "</a>"
         // alert(JSON.stringify(row))
         return link

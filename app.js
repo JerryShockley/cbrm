@@ -21,9 +21,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, `public`)))
 
-app.use(`/projects`, projectsRouter)
-app.use(`/respondents`, respondentsRouter)
-app.use(`/mappings`, mappingsRouter)
+app.use(`/9339/projects`, projectsRouter)
+app.use(`/9339/respondents`, respondentsRouter)
+app.use(`/9339/mappings`, mappingsRouter)
 app.use(`/admin`, adminRouter)
 app.use(`/`, indexRouter)
 

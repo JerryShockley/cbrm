@@ -105,7 +105,7 @@ exports.projectCreate = (req, res) => {
   })
     .then((project) => {
       console.log(`Created new Project #${project.id}`)
-      res.redirect(`/projects/${project.id}`)
+      res.redirect(`/9339/projects/${project.id}`)
     })
     .catch((err) => {
       console.error(`Failed to create project: ${err.message}`)
@@ -133,7 +133,7 @@ exports.projectUpdate = async (req, res) => {
     project.finalPrompt = finalPrompt
     project.surveyUrl = surveyUrl
     await project.save()
-    res.redirect(`/projects/${id}`)
+    res.redirect(`/9339/projects/${id}`)
   } catch (err) {
     console.log(`Project update(${id}) failed: ${err}`)
     return next(err)

@@ -1,5 +1,5 @@
 $(`#mapping-table`).DataTable({
-  ajax: `/mappings/listdata`,
+  ajax: `/9339/mappings/listdata`,
   dom: `Bfrtip`,
   buttons: [`copy`, `csv`, `excel`, `pdf`, `print`, `pageLength`],
   columns: [
