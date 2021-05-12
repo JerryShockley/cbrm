@@ -64,7 +64,7 @@ exports.respondentCreate = (req, res) => {
   )
     .then((respondent) => {
       console.log(`finished create`)
-      res.json({ location: `/finish/${respondent.id}` })
+      res.json({ location: `/9339/finish/${respondent.id}` })
     })
     .catch((err) => {
       console.error(`failed to create respondent: ${err.message}`)
